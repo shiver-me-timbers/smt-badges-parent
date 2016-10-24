@@ -28,5 +28,9 @@ seen at the top of this README.
 
 ```java
 // This will produce the badges SVG XML as a String.
-new Badge("badge", "test").toString();
+new Badge("badge", "example").toString();
 ```
+
+###### Example
+
+![Badge Example](https://shiver-me-timbers.github.io/smt-badges-parent/badge-example.svg)
