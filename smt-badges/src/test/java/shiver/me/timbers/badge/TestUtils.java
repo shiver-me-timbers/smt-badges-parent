@@ -24,13 +24,14 @@ import java.awt.geom.AffineTransform;
 import java.io.IOException;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
+import static shiver.me.timbers.badge.FontMetrics.FONT_SIZE_FIX;
 
 public class TestUtils {
 
     public static int textWidth(String font, int fontSize, String text) {
         final AffineTransform affinetransform = new AffineTransform();
         final FontRenderContext context = new FontRenderContext(affinetransform, true, true);
-        return (int) new Font(font, Font.PLAIN, fontSize).getStringBounds(text, context).getWidth();
+        return (int) (new Font(font, Font.PLAIN, fontSize).getStringBounds(text, context).getWidth() * FONT_SIZE_FIX);
     }
 
     public static int textY(int height, int padding) {

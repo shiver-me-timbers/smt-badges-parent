@@ -27,6 +27,8 @@ import java.awt.geom.AffineTransform;
  */
 public class FontMetrics {
 
+    static final double FONT_SIZE_FIX = 1.008;
+
     private final Font font;
 
     public FontMetrics(String font, int fontSize) {
@@ -43,6 +45,6 @@ public class FontMetrics {
     public double calculateWidth(String text) {
         final AffineTransform affinetransform = new AffineTransform();
         final FontRenderContext context = new FontRenderContext(affinetransform, true, true);
-        return (int) font.getStringBounds(text, context).getWidth();
+        return (int) (font.getStringBounds(text, context).getWidth() * FONT_SIZE_FIX);
     }
 }
