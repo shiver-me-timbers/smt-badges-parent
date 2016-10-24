@@ -29,7 +29,6 @@ import static shiver.me.timbers.badge.Badge.HEIGHT;
 import static shiver.me.timbers.badge.Badge.PADDING;
 import static shiver.me.timbers.badge.TestUtils.resource;
 import static shiver.me.timbers.data.random.RandomEnums.someEnum;
-import static shiver.me.timbers.data.random.RandomStrings.someAlphaNumericString;
 
 public class ITBadge {
 
@@ -50,18 +49,16 @@ public class ITBadge {
         throws ParserConfigurationException, IOException, SAXException, XPathExpressionException {
 
         // Given
-        final String subject = someAlphaNumericString(50);
-        final String status = someAlphaNumericString(60);
+        final String subject = "badge";
+        final String status = "example";
         final Colour colour = someEnum(Colour.class);
 
         // When
-        final Badge badge = new Badge(subject, status, colour);
-        System.out.println(badge);
-        final Document actual = toDocument(badge);
+        final Document actual = toDocument(new Badge(subject, status, colour));
 
         // Then
         final Element svg = findElementById(actual, "smt-svg");
-        final String badgeWidth = badgeWidth(subject, status, PADDING);
+        final String badgeWidth = badgeWidth(subject, status);
         final String badgeHeight = valueOf(HEIGHT);
         final Element rectangle = findElementById(actual, "smt-badge-subject-rectangle");
         final Element statusPath = findElementById(actual, "smt-badge-status-path");
@@ -88,7 +85,7 @@ public class ITBadge {
         assertThat(subjectText.getAttribute("x"), equalTo(valueOf(PADDING)));
         assertThat(subjectText.getAttribute("y"), equalTo(textY()));
         assertThat(subjectText.getTextContent(), equalTo(subject));
-        assertThat(statusText.getAttribute("x"), equalTo(statusX(subject, PADDING)));
+        assertThat(statusText.getAttribute("x"), equalTo(statusX(subject)));
         assertThat(statusText.getAttribute("y"), equalTo(textY()));
         assertThat(statusText.getTextContent(), equalTo(status));
         assertThat(javaScript.getTextContent(), equalTo(resource("badge.js")));
@@ -104,12 +101,8 @@ public class ITBadge {
         return (Element) XPATH.evaluate(format("//*[@id='%s']", id), document, XPathConstants.NODE);
     }
 
-    private static String badgeWidth(String subject, String status, int padding) {
-        return valueOf((textWidth(subject) + (padding * 2)) + (textWidth(status) + (padding * 2)));
-    }
-
-    private static int textWidth(String text) {
-        return TestUtils.textWidth(FONT, FONT_SIZE, text);
+    private static String badgeWidth(String subject, String status) {
+        return valueOf(textWidth(subject) + textWidth(status));
     }
 
     private static String subjectPathDirections(String subject, String badgeHeight) {
@@ -125,6 +118,10 @@ public class ITBadge {
         return pathDirections(subjectWidth, 0, textWidth(status), Integer.valueOf(badgeHeight), subjectWidth);
     }
 
+    private static int textWidth(String text) {
+        return TestUtils.textWidth(FONT, FONT_SIZE, text) + (PADDING * 2);
+    }
+
     private static String gradientPathDirections(String badgeWidth, String badgeHeight) {
         return pathDirections(0, 0, Integer.valueOf(badgeWidth), Integer.valueOf(badgeHeight), 0);
     }
@@ -133,7 +130,7 @@ public class ITBadge {
         return valueOf(TestUtils.textY(HEIGHT, PADDING));
     }
 
-    private static String statusX(String subject, int padding) {
-        return valueOf(textWidth(subject) + padding);
+    private static String statusX(String subject) {
+        return valueOf(textWidth(subject) + PADDING);
     }
 }

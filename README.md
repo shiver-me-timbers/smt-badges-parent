@@ -15,5 +15,18 @@ limitations under the License.
 -->
 smt-badges-parent
 ===========
+[![Build Status](https://travis-ci.org/shiver-me-timbers/smt-badges-parent.svg)](https://travis-ci.org/shiver-me-timbers/smt-badges-parent) [![Coverage Status](https://coveralls.io/repos/shiver-me-timbers/smt-badges-parent/badge.svg?branch=master&service=github)](https://coveralls.io/github/shiver-me-timbers/smt-badges-parent?branch=master) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.shiver-me-timbers/smt-badges-parent/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.shiver-me-timbers/smt-badges-parent/)
 
-This is the parent project of the smt-badges library.
+This is the parent project of the smt-badges library. It contains the following projects.
+
+## [smt-badges](smt-badges)
+
+This is a library that can be used to generate [shields.io](https://shields.io/) style badges. Examples of witch can be 
+seen at the top of this README.
+
+#### Usage
+
+```java
+// This will produce the badges SVG XML as a String.
+new Badge("badge", "test").toString();
+```

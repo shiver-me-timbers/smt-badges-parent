@@ -15,5 +15,17 @@ limitations under the License.
 -->
 smt-badges
 ===========
+[![Build Status](https://travis-ci.org/shiver-me-timbers/smt-badges.svg)](https://travis-ci.org/shiver-me-timbers/smt-badges) [![Coverage Status](https://coveralls.io/repos/shiver-me-timbers/smt-badges/badge.svg?branch=master&service=github)](https://coveralls.io/github/shiver-me-timbers/smt-badges?branch=master) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.shiver-me-timbers/smt-badges/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.shiver-me-timbers/smt-badges/)
 
-This is a library that allys easy creation of SVG quality badges.
+This is a library that allows easy creation of SVG [shields.io](https://shields.io/) style badges.
+
+## Usage
+
+```java
+// This will produce the badges SVG XML as a String.
+new Badge("badge", "test").toString();
+```
+
+#### Example
+
+![Badge Example](badge-example.svg)
