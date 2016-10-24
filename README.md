@@ -21,7 +21,7 @@ This is the parent project of the smt-badges library. It contains the following 
 
 ## [smt-badges](smt-badges)
 
-This is a library that can be used to generate [shields.io](https://shields.io/) style badges. Examples of witch can be 
+This is a library that can be used to generate [shields.io](https://shields.io/) style badges. Examples of which can be 
 seen at the top of this README.
 
 #### Usage
