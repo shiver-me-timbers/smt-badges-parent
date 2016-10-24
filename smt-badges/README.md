@@ -28,4 +28,4 @@ new Badge("badge", "test").toString();
 
 #### Example
 
-[![Badge Example](badge-example.svg)](badge-example.svg)
+![Badge Example](https://shiver-me-timbers.github.io/smt-badges-parent/badge-example.svg)
