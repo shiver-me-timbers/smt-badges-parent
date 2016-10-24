@@ -73,6 +73,34 @@
                     </dependency>
                 </dependencies>
             </plugin>
+            <plugin>
+                <groupId>com.samaxes.maven</groupId>
+                <artifactId>minify-maven-plugin</artifactId>
+                <version>1.7.4</version>
+                <executions>
+                    <execution>
+                        <id>default-minify</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>minify</goal>
+                        </goals>
+                        <configuration>
+                            <charset>UTF-8</charset>
+                            <jsSourceDir>js</jsSourceDir>
+                            <webappSourceDir>${project.basedir}/src/main</webappSourceDir>
+                            <jsSourceDir>resources</jsSourceDir>
+                            <jsSourceIncludes>
+                                <jsSourceInclude>badge.js</jsSourceInclude>
+                            </jsSourceIncludes>
+                            <webappTargetDir>${project.build.directory}</webappTargetDir>
+                            <jsTargetDir>classes</jsTargetDir>
+                            <jsFinalFile>badge.js</jsFinalFile>
+                            <nosuffix>true</nosuffix>
+                            <jsEngine>CLOSURE</jsEngine>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 
