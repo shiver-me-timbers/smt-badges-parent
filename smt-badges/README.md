@@ -15,7 +15,7 @@ limitations under the License.
 -->
 smt-badges
 ===========
-[![Build Status](https://travis-ci.org/shiver-me-timbers/smt-badges.svg)](https://travis-ci.org/shiver-me-timbers/smt-badges) [![Coverage Status](https://coveralls.io/repos/shiver-me-timbers/smt-badges/badge.svg?branch=master&service=github)](https://coveralls.io/github/shiver-me-timbers/smt-badges?branch=master) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.shiver-me-timbers/smt-badges/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.shiver-me-timbers/smt-badges/)
+[![Build Status](https://travis-ci.org/shiver-me-timbers/smt-badges-parent.svg)](https://travis-ci.org/shiver-me-timbers/smt-badges-parent) [![Coverage Status](https://coveralls.io/repos/shiver-me-timbers/smt-badges-parent/badge.svg?branch=master&service=github)](https://coveralls.io/github/shiver-me-timbers/smt-badges-parent?branch=master) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.shiver-me-timbers/smt-badges/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.shiver-me-timbers/smt-badges/)
 
 This is a library that allows easy creation of SVG [shields.io](https://shields.io/) style badges.
 
