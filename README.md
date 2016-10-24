@@ -28,7 +28,7 @@ seen at the top of this README.
 
 ```java
 // This will produce the badges SVG XML as a String.
-new Badge("badge", "example").toString();
+new Badge("badge", "example", Colour.yellow).toString();
 ```
 
 ###### Example
