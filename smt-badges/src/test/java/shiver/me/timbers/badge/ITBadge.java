@@ -27,6 +27,7 @@ import static shiver.me.timbers.badge.Badge.FONT;
 import static shiver.me.timbers.badge.Badge.FONT_SIZE;
 import static shiver.me.timbers.badge.Badge.HEIGHT;
 import static shiver.me.timbers.badge.Badge.PADDING;
+import static shiver.me.timbers.badge.TestUtils.resource;
 import static shiver.me.timbers.data.random.RandomEnums.someEnum;
 import static shiver.me.timbers.data.random.RandomStrings.someAlphaNumericString;
 
@@ -49,12 +50,14 @@ public class ITBadge {
         throws ParserConfigurationException, IOException, SAXException, XPathExpressionException {
 
         // Given
-        final String subject = someAlphaNumericString(8);
-        final String status = someAlphaNumericString(13);
+        final String subject = someAlphaNumericString(50);
+        final String status = someAlphaNumericString(60);
         final Colour colour = someEnum(Colour.class);
 
         // When
-        final Document actual = toDocument(new Badge(subject, status, colour));
+        final Badge badge = new Badge(subject, status, colour);
+        System.out.println(badge);
+        final Document actual = toDocument(badge);
 
         // Then
         final Element svg = findElementById(actual, "smt-svg");
@@ -65,6 +68,7 @@ public class ITBadge {
         final Element textContainer = findElementById(actual, "smt-badge-text-container");
         final Element subjectText = findElementById(actual, "smt-badge-subject");
         final Element statusText = findElementById(actual, "smt-badge-status");
+        final Element javaScript = (Element) actual.getElementsByTagName("script").item(0);
         assertThat(svg.getAttribute("width"), equalTo(badgeWidth));
         assertThat(svg.getAttribute("height"), equalTo(badgeHeight));
         assertThat(rectangle.getAttribute("width"), equalTo(badgeWidth));
@@ -87,6 +91,7 @@ public class ITBadge {
         assertThat(statusText.getAttribute("x"), equalTo(statusX(subject, PADDING)));
         assertThat(statusText.getAttribute("y"), equalTo(textY()));
         assertThat(statusText.getTextContent(), equalTo(status));
+        assertThat(javaScript.getTextContent(), equalTo(resource("badge.js")));
     }
 
     private static Document toDocument(Badge badge) throws ParserConfigurationException, IOException, SAXException {

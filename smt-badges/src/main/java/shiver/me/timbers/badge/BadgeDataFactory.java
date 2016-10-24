@@ -42,7 +42,7 @@ public class BadgeDataFactory {
         final int width = width(subjectWidth, statusWidth);
         final int subjectX = padding;
         final int subjectY = textY();
-        final int statusX = subjectWidth + padding;
+        final int statusX = padding + subjectWidth;
         final int statusY = textY();
         final String javaScript = resourceFactory.create(javaScriptFile);
         return new BadgeData(
@@ -64,11 +64,11 @@ public class BadgeDataFactory {
     }
 
     private int textWidth(String text) {
-        return (int) fontMetrics.calculateWidth(font, fontSize, text);
+        return (int) fontMetrics.calculateWidth(font, fontSize, text) + (padding * 2);
     }
 
     private int width(int subjectWidth, int statusWidth) {
-        return (subjectWidth + (padding * 2)) + (statusWidth + (padding * 2));
+        return subjectWidth + statusWidth;
     }
 
     private int textY() {

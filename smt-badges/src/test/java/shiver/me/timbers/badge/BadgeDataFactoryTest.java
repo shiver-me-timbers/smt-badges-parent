@@ -42,22 +42,27 @@ public class BadgeDataFactoryTest {
             .create(subject, status, colour);
 
         // Then
+        final int subjectContainerWidth = width(padding, subjectWidth);
         assertThat(actual, hasField("subject", subject));
         assertThat(actual, hasField("status", status));
         assertThat(actual, hasField("colour", colour));
         assertThat(actual, hasField("width", width(padding, subjectWidth, statusWidth)));
         assertThat(actual, hasField("height", height));
-        assertThat(actual, hasField("subjectWidth", (int) subjectWidth));
-        assertThat(actual, hasField("statusWidth", (int) statusWidth));
+        assertThat(actual, hasField("subjectWidth", subjectContainerWidth));
+        assertThat(actual, hasField("statusWidth", width(padding, statusWidth)));
         assertThat(actual, hasField("font", font));
         assertThat(actual, hasField("fontSize", fontSize));
         assertThat(actual, hasField("subjectX", padding));
         assertThat(actual, hasField("subjectY", textY(height, padding)));
-        assertThat(actual, hasField("statusX", ((int) subjectWidth) + padding));
+        assertThat(actual, hasField("statusX", subjectContainerWidth + padding));
         assertThat(actual, hasField("statusY", textY(height, padding)));
     }
 
+    private int width(int padding, double text) {
+        return ((int) text + (padding * 2));
+    }
+
     private int width(int padding, double subjectWidth, double statusWidth) {
-        return ((int) subjectWidth + (padding * 2)) + ((int) statusWidth + (padding * 2));
+        return width(padding, subjectWidth) + width(padding, statusWidth);
     }
 }
