@@ -43,7 +43,13 @@ public class Badge {
         );
     }
 
-    public Badge(String subject, String status, Colour colour, BadgeDataFactory dataFactory, BadgeTemplateParser template) {
+    public Badge(
+        String subject,
+        String status,
+        Colour colour,
+        BadgeDataFactory dataFactory,
+        BadgeTemplateParser template
+    ) {
         this.svg = template.generate(dataFactory.create(subject, status, colour));
     }
 

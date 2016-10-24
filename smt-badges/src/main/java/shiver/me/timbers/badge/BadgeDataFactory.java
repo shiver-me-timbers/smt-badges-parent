@@ -31,7 +31,15 @@ public class BadgeDataFactory {
     private final BadgeResourceFactory resourceFactory;
 
     public BadgeDataFactory(int height, int padding, String font, int fontSize, String javaScriptFile) {
-        this(height, padding, font, fontSize, javaScriptFile, new FontMetrics(), new BadgeResourceFactory());
+        this(
+            height,
+            padding,
+            font,
+            fontSize,
+            javaScriptFile,
+            new FontMetrics(font, fontSize),
+            new BadgeResourceFactory()
+        );
     }
 
     public BadgeDataFactory(
@@ -80,7 +88,7 @@ public class BadgeDataFactory {
     }
 
     private int textWidth(String text) {
-        return (int) fontMetrics.calculateWidth(font, fontSize, text) + (padding * 2);
+        return (int) fontMetrics.calculateWidth(text) + (padding * 2);
     }
 
     private int width(int subjectWidth, int statusWidth) {

@@ -45,6 +45,7 @@ import static shiver.me.timbers.badge.Badge.HEIGHT;
 import static shiver.me.timbers.badge.Badge.PADDING;
 import static shiver.me.timbers.badge.TestUtils.resource;
 import static shiver.me.timbers.data.random.RandomEnums.someEnum;
+import static shiver.me.timbers.data.random.RandomStrings.someAlphaNumericString;
 
 public class ITBadge {
 
@@ -65,8 +66,8 @@ public class ITBadge {
         throws ParserConfigurationException, IOException, SAXException, XPathExpressionException {
 
         // Given
-        final String subject = "badge";
-        final String status = "example";
+        final String subject = someAlphaNumericString(8);
+        final String status = someAlphaNumericString(13);
         final Colour colour = someEnum(Colour.class);
 
         // When

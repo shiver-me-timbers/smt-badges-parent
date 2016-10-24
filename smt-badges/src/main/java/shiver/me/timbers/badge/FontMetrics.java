@@ -19,7 +19,6 @@ package shiver.me.timbers.badge;
 import java.awt.*;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.AffineTransform;
-import java.io.IOException;
 
 /**
  * This class provides methods for getting metrics on string that have been rendered with a certain font.
@@ -28,22 +27,22 @@ import java.io.IOException;
  */
 public class FontMetrics {
 
-    static {
-        try {
-            GraphicsEnvironment.getLocalGraphicsEnvironment().registerFont(
-                Font.createFont(
-                    Font.TRUETYPE_FONT,
-                    Thread.currentThread().getContextClassLoader().getResourceAsStream("DejaVuSans.ttf")
-                )
-            );
-        } catch (FontFormatException | IOException e) {
-            throw new UnsupportedOperationException();
-        }
+    private final Font font;
+
+    public FontMetrics(String font, int fontSize) {
+        this(new DejaVuSansFontFactory(), font, fontSize);
     }
 
-    public double calculateWidth(String font, int fontSize, String text) {
+    public FontMetrics(FontFactory fontFactory, String font, int fontSize) {
+        this.font = fontFactory.create(font, fontSize);
+    }
+
+    /**
+     * Calculate the width of the supplied text when it is rendered with the badges default font.
+     */
+    public double calculateWidth(String text) {
         final AffineTransform affinetransform = new AffineTransform();
         final FontRenderContext context = new FontRenderContext(affinetransform, true, true);
-        return (int) new Font(font, Font.PLAIN, fontSize).getStringBounds(text, context).getWidth();
+        return (int) font.getStringBounds(text, context).getWidth();
     }
 }

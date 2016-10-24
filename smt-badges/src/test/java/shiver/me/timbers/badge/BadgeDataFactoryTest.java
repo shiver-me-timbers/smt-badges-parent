@@ -49,13 +49,20 @@ public class BadgeDataFactoryTest {
         final String javaScript = someString();
 
         // Given
-        given(fontMetrics.calculateWidth(font, fontSize, subject)).willReturn(subjectWidth);
-        given(fontMetrics.calculateWidth(font, fontSize, status)).willReturn(statusWidth);
+        given(fontMetrics.calculateWidth(subject)).willReturn(subjectWidth);
+        given(fontMetrics.calculateWidth(status)).willReturn(statusWidth);
         given(resourceFactory.create(javaScriptFile)).willReturn(javaScript);
 
         // When
-        final BadgeData actual = new BadgeDataFactory(height, padding, font, fontSize, javaScriptFile, fontMetrics, resourceFactory)
-            .create(subject, status, colour);
+        final BadgeData actual = new BadgeDataFactory(
+            height,
+            padding,
+            font,
+            fontSize,
+            javaScriptFile,
+            fontMetrics,
+            resourceFactory
+        ).create(subject, status, colour);
 
         // Then
         final int subjectContainerWidth = width(padding, subjectWidth);

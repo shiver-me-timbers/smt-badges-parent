@@ -40,4 +40,6 @@ public class TestUtils {
     public static String resource(String resource) throws IOException {
         return IOUtils.toString(Thread.currentThread().getContextClassLoader().getResourceAsStream(resource), UTF_8);
     }
+
+    public static final String[] FONTS = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
 }
