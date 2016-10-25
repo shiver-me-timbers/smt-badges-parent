@@ -39,30 +39,20 @@ public class BadgeDataFactoryTest {
         final int height = someInteger();
         final int padding = someInteger();
         final FontMetrics fontMetrics = mock(FontMetrics.class);
-        final BadgeResourceFactory resourceFactory = mock(BadgeResourceFactory.class);
         final String subject = someString();
         final String status = someString();
         final Colour colour = someEnum(Colour.class);
 
         final double subjectWidth = someDouble();
         final double statusWidth = someDouble();
-        final String javaScript = someString();
 
         // Given
         given(fontMetrics.calculateWidth(subject)).willReturn(subjectWidth);
         given(fontMetrics.calculateWidth(status)).willReturn(statusWidth);
-        given(resourceFactory.create(javaScriptFile)).willReturn(javaScript);
 
         // When
-        final BadgeData actual = new BadgeDataFactory(
-            height,
-            padding,
-            font,
-            fontSize,
-            javaScriptFile,
-            fontMetrics,
-            resourceFactory
-        ).create(subject, status, colour);
+        final BadgeData actual = new BadgeDataFactory(height, padding, font, fontSize, fontMetrics)
+            .create(subject, status, colour);
 
         // Then
         final int subjectContainerWidth = width(padding, subjectWidth);

@@ -28,6 +28,8 @@ import static java.awt.Font.createFont;
  */
 public class DejaVuSansFontFactory implements FontFactory {
 
+    static final String DEJA_VU_SANS_TTF = "DejaVuSans-webfont.ttf";
+
     private final Font dejaVuSans;
 
     public DejaVuSansFontFactory() {
@@ -36,15 +38,15 @@ public class DejaVuSansFontFactory implements FontFactory {
 
     public DejaVuSansFontFactory(ResourceFactory resourceFactory) {
         try {
-            this.dejaVuSans = createFont(TRUETYPE_FONT, resourceFactory.find("DejaVuSans.ttf"));
+            this.dejaVuSans = createFont(TRUETYPE_FONT, resourceFactory.find(DEJA_VU_SANS_TTF));
         } catch (FontFormatException | IOException e) {
-            throw new BadgeFontException("DejaVuSans.ttf", e);
+            throw new BadgeFontException(DEJA_VU_SANS_TTF, e);
         }
     }
 
     @Override
     public Font create(String font, int fontSize) {
-        if (dejaVuSans.getName().equals(font)) {
+        if (dejaVuSans.getFamily().equals(font)) {
             return dejaVuSans.deriveFont(PLAIN, fontSize);
         }
         return new Font(font, PLAIN, fontSize);

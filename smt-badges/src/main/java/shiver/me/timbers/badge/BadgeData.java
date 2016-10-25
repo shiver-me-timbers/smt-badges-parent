@@ -36,7 +36,6 @@ public class BadgeData {
     private final int subjectY;
     private final int statusX;
     private final int statusY;
-    private final String javaScript;
 
     public BadgeData(
         String subject,
@@ -51,8 +50,7 @@ public class BadgeData {
         int subjectX,
         int subjectY,
         int statusX,
-        int statusY,
-        String javaScript
+        int statusY
     ) {
         this.subject = subject;
         this.status = status;
@@ -67,7 +65,6 @@ public class BadgeData {
         this.subjectY = subjectY;
         this.statusX = statusX;
         this.statusY = statusY;
-        this.javaScript = javaScript;
     }
 
     public String getSubject() {
@@ -120,9 +117,5 @@ public class BadgeData {
 
     public int getStatusY() {
         return statusY;
-    }
-
-    public String getJavaScript() {
-        return javaScript;
     }
 }

@@ -29,7 +29,6 @@ public class Badge {
     static final int PADDING = 5;
     static final String FONT = "DejaVu Sans";
     static final int FONT_SIZE = 11;
-    private static final String JAVA_SCRIPT_FILE = "badge.js";
     static final String TEMPLATE = "badge.mustache";
 
     private final String svg;
@@ -38,7 +37,7 @@ public class Badge {
         this(
             subject,
             status, colour,
-            new BadgeDataFactory(HEIGHT, PADDING, FONT, FONT_SIZE, JAVA_SCRIPT_FILE),
+            new BadgeDataFactory(HEIGHT, PADDING, FONT, FONT_SIZE),
             new BadgeTemplateParser(TEMPLATE)
         );
     }

@@ -33,6 +33,9 @@ import java.awt.*;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
+import static java.awt.Font.PLAIN;
+import static java.awt.Font.TRUETYPE_FONT;
+import static java.awt.Font.createFont;
 import static java.lang.String.format;
 import static java.lang.String.valueOf;
 import static java.nio.charset.StandardCharsets.UTF_8;
@@ -43,21 +46,19 @@ import static shiver.me.timbers.badge.Badge.FONT;
 import static shiver.me.timbers.badge.Badge.FONT_SIZE;
 import static shiver.me.timbers.badge.Badge.HEIGHT;
 import static shiver.me.timbers.badge.Badge.PADDING;
-import static shiver.me.timbers.badge.TestUtils.resource;
 import static shiver.me.timbers.data.random.RandomEnums.someEnum;
 import static shiver.me.timbers.data.random.RandomStrings.someAlphaNumericString;
 
 public class ITBadge {
 
     private static final XPath XPATH = XPathFactory.newInstance().newXPath();
+    private static Font DEFAULT_FONT;
 
     @BeforeClass
     public static void setUp() throws IOException, FontFormatException {
-        GraphicsEnvironment.getLocalGraphicsEnvironment().registerFont(
-            Font.createFont(
-                Font.TRUETYPE_FONT,
-                Thread.currentThread().getContextClassLoader().getResourceAsStream("DejaVuSans.ttf")
-            )
+        DEFAULT_FONT = createFont(
+            TRUETYPE_FONT,
+            Thread.currentThread().getContextClassLoader().getResourceAsStream("DejaVuSans-webfont.ttf")
         );
     }
 
@@ -82,7 +83,6 @@ public class ITBadge {
         final Element textContainer = findElementById(actual, "smt-badge-text-container");
         final Element subjectText = findElementById(actual, "smt-badge-subject");
         final Element statusText = findElementById(actual, "smt-badge-status");
-        final Element javaScript = (Element) actual.getElementsByTagName("script").item(0);
         assertThat(svg.getAttribute("width"), equalTo(badgeWidth));
         assertThat(svg.getAttribute("height"), equalTo(badgeHeight));
         assertThat(rectangle.getAttribute("width"), equalTo(badgeWidth));
@@ -105,7 +105,6 @@ public class ITBadge {
         assertThat(statusText.getAttribute("x"), equalTo(statusX(subject)));
         assertThat(statusText.getAttribute("y"), equalTo(textY()));
         assertThat(statusText.getTextContent(), equalTo(status));
-        assertThat(javaScript.getTextContent(), equalTo(resource("badge.js")));
     }
 
     private static Document toDocument(Badge badge) throws ParserConfigurationException, IOException, SAXException {
@@ -136,7 +135,7 @@ public class ITBadge {
     }
 
     private static int textWidth(String text) {
-        return TestUtils.textWidth(FONT, FONT_SIZE, text) + (PADDING * 2);
+        return TestUtils.textWidth(DEFAULT_FONT.deriveFont(PLAIN, FONT_SIZE), text) + (PADDING * 2);
     }
 
     private static String gradientPathDirections(String badgeWidth, String badgeHeight) {

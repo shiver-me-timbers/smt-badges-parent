@@ -26,38 +26,18 @@ public class BadgeDataFactory {
     private final int padding;
     private final String font;
     private final int fontSize;
-    private final String javaScriptFile;
     private final FontMetrics fontMetrics;
-    private final BadgeResourceFactory resourceFactory;
 
-    public BadgeDataFactory(int height, int padding, String font, int fontSize, String javaScriptFile) {
-        this(
-            height,
-            padding,
-            font,
-            fontSize,
-            javaScriptFile,
-            new FontMetrics(font, fontSize),
-            new BadgeResourceFactory()
-        );
+    public BadgeDataFactory(int height, int padding, String font, int fontSize) {
+        this(height, padding, font, fontSize, new FontMetrics(font, fontSize));
     }
 
-    public BadgeDataFactory(
-        int height,
-        int padding,
-        String font,
-        int fontSize,
-        String javaScriptFile,
-        FontMetrics fontMetrics,
-        BadgeResourceFactory resourceFactory
-    ) {
+    public BadgeDataFactory(int height, int padding, String font, int fontSize, FontMetrics fontMetrics) {
         this.height = height;
         this.padding = padding;
         this.font = font;
         this.fontSize = fontSize;
-        this.javaScriptFile = javaScriptFile;
         this.fontMetrics = fontMetrics;
-        this.resourceFactory = resourceFactory;
     }
 
     public BadgeData create(String subject, String status, Colour colour) {
@@ -68,7 +48,6 @@ public class BadgeDataFactory {
         final int subjectY = textY();
         final int statusX = padding + subjectWidth;
         final int statusY = textY();
-        final String javaScript = resourceFactory.create(javaScriptFile);
         return new BadgeData(
             subject,
             status,
@@ -82,8 +61,7 @@ public class BadgeDataFactory {
             subjectX,
             subjectY,
             statusX,
-            statusY,
-            javaScript
+            statusY
         );
     }
 

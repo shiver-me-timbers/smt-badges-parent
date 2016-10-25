@@ -31,6 +31,7 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
+import static shiver.me.timbers.badge.DejaVuSansFontFactory.DEJA_VU_SANS_TTF;
 import static shiver.me.timbers.badge.TestUtils.FONTS;
 import static shiver.me.timbers.data.random.RandomIntegers.someIntegerBetween;
 import static shiver.me.timbers.data.random.RandomThings.someThing;
@@ -51,7 +52,7 @@ public class DejaVuSansFontFactoryTest {
     public void Can_create_a_DejaVuSans_font() {
 
         // Given
-        final String font = "DejaVu Sans";
+        final String font = "DejaVu Sans Book";
         final int fontSize = someIntegerBetween(1, 32);
 
         // When
@@ -83,14 +84,13 @@ public class DejaVuSansFontFactoryTest {
     public void Can_fail_to_create_a_font() throws IOException {
 
         final ResourceFactory resourceFactory = mock(ResourceFactory.class);
-        final String fontFile = "DejaVuSans.ttf";
 
         final IOException exception = new IOException();
 
         // Given
-        given(resourceFactory.find(fontFile)).willThrow(exception);
+        given(resourceFactory.find(DEJA_VU_SANS_TTF)).willThrow(exception);
         expectedException.expect(BadgeFontException.class);
-        expectedException.expectMessage(equalTo(format("Failed to load font file (%s)", fontFile)));
+        expectedException.expectMessage(equalTo(format("Failed to load font file (%s)", DEJA_VU_SANS_TTF)));
         expectedException.expectCause(is(exception));
 
         // When
