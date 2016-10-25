@@ -56,18 +56,19 @@ public class BadgeDataFactoryTest {
 
         // Then
         final int subjectContainerWidth = width(padding, subjectWidth);
+        final int statusContainerWidth = width(padding, statusWidth);
         assertThat(actual, hasField("subject", subject));
         assertThat(actual, hasField("status", status));
         assertThat(actual, hasField("colour", colour));
         assertThat(actual, hasField("width", width(padding, subjectWidth, statusWidth)));
         assertThat(actual, hasField("height", height));
         assertThat(actual, hasField("subjectWidth", subjectContainerWidth));
-        assertThat(actual, hasField("statusWidth", width(padding, statusWidth)));
+        assertThat(actual, hasField("statusWidth", statusContainerWidth));
         assertThat(actual, hasField("font", font));
         assertThat(actual, hasField("fontSize", fontSize));
-        assertThat(actual, hasField("subjectX", padding));
+        assertThat(actual, hasField("subjectX", subjectContainerWidth / 2));
         assertThat(actual, hasField("subjectY", textY(height, padding)));
-        assertThat(actual, hasField("statusX", subjectContainerWidth + padding));
+        assertThat(actual, hasField("statusX", subjectContainerWidth + (statusContainerWidth / 2)));
         assertThat(actual, hasField("statusY", textY(height, padding)));
     }
 

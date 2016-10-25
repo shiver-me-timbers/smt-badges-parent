@@ -44,9 +44,9 @@ public class BadgeDataFactory {
         final int subjectWidth = textWidth(subject);
         final int statusWidth = textWidth(status);
         final int width = width(subjectWidth, statusWidth);
-        final int subjectX = padding;
+        final int subjectX = subjectWidth / 2;
         final int subjectY = textY();
-        final int statusX = padding + subjectWidth;
+        final int statusX = subjectWidth + (statusWidth / 2);
         final int statusY = textY();
         return new BadgeData(
             subject,

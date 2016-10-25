@@ -99,10 +99,10 @@ public class ITBadge {
         );
         assertThat(textContainer.getAttribute("font-family"), startsWith(FONT));
         assertThat(textContainer.getAttribute("font-size"), equalTo(valueOf(FONT_SIZE)));
-        assertThat(subjectText.getAttribute("x"), equalTo(valueOf(PADDING)));
+        assertThat(subjectText.getAttribute("x"), equalTo(subjectX(subject)));
         assertThat(subjectText.getAttribute("y"), equalTo(textY()));
         assertThat(subjectText.getTextContent(), equalTo(subject));
-        assertThat(statusText.getAttribute("x"), equalTo(statusX(subject)));
+        assertThat(statusText.getAttribute("x"), equalTo(statusX(subject, status)));
         assertThat(statusText.getAttribute("y"), equalTo(textY()));
         assertThat(statusText.getTextContent(), equalTo(status));
     }
@@ -146,7 +146,11 @@ public class ITBadge {
         return valueOf(TestUtils.textY(HEIGHT, PADDING));
     }
 
-    private static String statusX(String subject) {
-        return valueOf(textWidth(subject) + PADDING);
+    private static String statusX(String subject, String status) {
+        return valueOf(textWidth(subject) + (textWidth(status) / 2));
+    }
+
+    private static String subjectX(String subject) {
+        return valueOf(textWidth(subject) / 2);
     }
 }
