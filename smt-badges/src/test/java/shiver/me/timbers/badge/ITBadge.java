@@ -93,19 +93,19 @@ public class ITBadge {
     }
 
     private void assertSvg(Document actual, String badgeWidth, String badgeHeight) throws XPathExpressionException {
-        final Element svg = findElementById(actual, "smt-svg");
+        final Element svg = (Element) actual.getElementsByTagName("svg").item(0);
         assertThat(svg.getAttribute("width"), equalTo(badgeWidth));
         assertThat(svg.getAttribute("height"), equalTo(badgeHeight));
     }
 
     private void assertSubjectRectangle(Document actual, String badgeWidth, String badgeHeight) throws XPathExpressionException {
-        final Element subjectRectangle = findElementById(actual, "smt-badge-subject-rectangle");
+        final Element subjectRectangle = (Element) actual.getElementsByTagName("rect").item(0);
         assertThat(subjectRectangle.getAttribute("width"), equalTo(badgeWidth));
         assertThat(subjectRectangle.getAttribute("height"), equalTo(badgeHeight));
     }
 
     private void assertStatusRectangle(Document actual, String subject, String status, Colour colour, String badgeHeight) throws XPathExpressionException {
-        final Element statusRectangle = findElementById(actual, "smt-badge-status-rectangle");
+        final Element statusRectangle = (Element) actual.getElementsByTagName("rect").item(1);
         assertThat(statusRectangle.getAttribute("x"), equalTo(String.valueOf(textWidth(subject))));
         assertThat(statusRectangle.getAttribute("width"), equalTo(String.valueOf(textWidth(status))));
         assertThat(statusRectangle.getAttribute("height"), equalTo(badgeHeight));
@@ -113,26 +113,26 @@ public class ITBadge {
     }
 
     private void assertDividerPath(Document actual, String subject, Colour colour, String badgeHeight) throws XPathExpressionException {
-        final Element dividerPath = findElementById(actual, "smt-badge-divider-path");
+        final Element dividerPath = (Element) actual.getElementsByTagName("path").item(0);
         assertThat(dividerPath.getAttribute("d"), equalTo(dividerPathDirections(subject, badgeHeight)));
         assertThat(dividerPath.getAttribute("fill"), equalTo(colour.toString()));
     }
 
     private void assertGradientRectangle(Document actual, String badgeWidth, String badgeHeight) throws XPathExpressionException {
-        final Element gradientRectangle = findElementById(actual, "smt-badge-gradient-rectangle");
+        final Element gradientRectangle = (Element) actual.getElementsByTagName("rect").item(2);
         assertThat(gradientRectangle.getAttribute("width"), equalTo(badgeWidth));
         assertThat(gradientRectangle.getAttribute("height"), equalTo(badgeHeight));
     }
 
     private void assertTextContainer(Document actual) throws XPathExpressionException {
-        final Element textContainer = findElementById(actual, "smt-badge-text-container");
+        final Element textContainer = (Element) actual.getElementsByTagName("g").item(0);
         assertThat(textContainer.getAttribute("font-family"), startsWith(DEFAULT_FONT.getFamily()));
         assertThat(textContainer.getAttribute("font-size"), equalTo(valueOf(FONT_SIZE)));
     }
 
     private void assertSubject(Document actual, String subject) throws XPathExpressionException {
-        final Element subjectTextShadow = findElementById(actual, "smt-badge-subject-shadow");
-        final Element subjectText = findElementById(actual, "smt-badge-subject");
+        final Element subjectTextShadow = (Element) actual.getElementsByTagName("text").item(0);
+        final Element subjectText = (Element) actual.getElementsByTagName("text").item(1);
         assertThat(subjectTextShadow.getAttribute("x"), equalTo(subjectX(subject)));
         assertThat(subjectTextShadow.getAttribute("y"), equalTo(textShadowY()));
         assertThat(subjectTextShadow.getTextContent(), equalTo(subject));
@@ -142,8 +142,8 @@ public class ITBadge {
     }
 
     private void assertStatus(Document actual, String subject, String status) throws XPathExpressionException {
-        final Element statusTextShadow = findElementById(actual, "smt-badge-status-shadow");
-        final Element statusText = findElementById(actual, "smt-badge-status");
+        final Element statusTextShadow = (Element) actual.getElementsByTagName("text").item(2);
+        final Element statusText = (Element) actual.getElementsByTagName("text").item(3);
         assertThat(statusTextShadow.getAttribute("x"), equalTo(statusX(subject, status)));
         assertThat(statusTextShadow.getAttribute("y"), equalTo(textShadowY()));
         assertThat(statusTextShadow.getTextContent(), equalTo(status));
