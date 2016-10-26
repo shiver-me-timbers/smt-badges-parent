@@ -21,6 +21,7 @@ import org.junit.Test;
 import static org.junit.Assert.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
+import static shiver.me.timbers.badge.TestUtils.textShadowY;
 import static shiver.me.timbers.badge.TestUtils.textY;
 import static shiver.me.timbers.data.random.RandomDoubles.someDouble;
 import static shiver.me.timbers.data.random.RandomEnums.someEnum;
@@ -33,9 +34,8 @@ public class BadgeDataFactoryTest {
     @Test
     public void Can_create_a_badge_data() {
 
-        final String font = someString();
+        final String fontFamily = someString();
         final int fontSize = someInteger();
-        final String javaScriptFile = someString();
         final int height = someInteger();
         final int padding = someInteger();
         final FontMetrics fontMetrics = mock(FontMetrics.class);
@@ -47,16 +47,19 @@ public class BadgeDataFactoryTest {
         final double statusWidth = someDouble();
 
         // Given
+        given(fontMetrics.fontFamily()).willReturn(fontFamily);
         given(fontMetrics.calculateWidth(subject)).willReturn(subjectWidth);
         given(fontMetrics.calculateWidth(status)).willReturn(statusWidth);
 
         // When
-        final BadgeData actual = new BadgeDataFactory(height, padding, font, fontSize, fontMetrics)
+        final BadgeData actual = new BadgeDataFactory(height, padding, fontSize, fontMetrics)
             .create(subject, status, colour);
 
         // Then
         final int subjectContainerWidth = width(padding, subjectWidth);
         final int statusContainerWidth = width(padding, statusWidth);
+        final int subjectX = subjectContainerWidth / 2;
+        final int statusX = subjectContainerWidth + (statusContainerWidth / 2);
         assertThat(actual, hasField("subject", subject));
         assertThat(actual, hasField("status", status));
         assertThat(actual, hasField("colour", colour));
@@ -64,11 +67,15 @@ public class BadgeDataFactoryTest {
         assertThat(actual, hasField("height", height));
         assertThat(actual, hasField("subjectWidth", subjectContainerWidth));
         assertThat(actual, hasField("statusWidth", statusContainerWidth));
-        assertThat(actual, hasField("font", font));
+        assertThat(actual, hasField("fontFamily", fontFamily));
         assertThat(actual, hasField("fontSize", fontSize));
-        assertThat(actual, hasField("subjectX", subjectContainerWidth / 2));
+        assertThat(actual, hasField("subjectShadowX", subjectX));
+        assertThat(actual, hasField("subjectShadowY", textShadowY(height, padding)));
+        assertThat(actual, hasField("subjectX", subjectX));
         assertThat(actual, hasField("subjectY", textY(height, padding)));
-        assertThat(actual, hasField("statusX", subjectContainerWidth + (statusContainerWidth / 2)));
+        assertThat(actual, hasField("statusShadowX", statusX));
+        assertThat(actual, hasField("statusShadowY", textShadowY(height, padding)));
+        assertThat(actual, hasField("statusX", statusX));
         assertThat(actual, hasField("statusY", textY(height, padding)));
     }
 

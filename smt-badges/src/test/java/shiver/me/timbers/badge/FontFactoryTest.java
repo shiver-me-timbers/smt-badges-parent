@@ -31,51 +31,33 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
-import static shiver.me.timbers.badge.DejaVuSansFontFactory.DEJA_VU_SANS_TTF;
-import static shiver.me.timbers.badge.TestUtils.FONTS;
 import static shiver.me.timbers.data.random.RandomIntegers.someIntegerBetween;
-import static shiver.me.timbers.data.random.RandomThings.someThing;
 
-public class DejaVuSansFontFactoryTest {
+public class FontFactoryTest {
 
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
 
-    private DejaVuSansFontFactory factory;
+    private String fontFile;
+    private FontFactory factory;
 
     @Before
     public void setUp() {
-        factory = new DejaVuSansFontFactory();
+        fontFile = "DejaVuSans-webfont.ttf";
+        factory = new FontFactory(fontFile);
     }
 
     @Test
     public void Can_create_a_DejaVuSans_font() {
 
         // Given
-        final String font = "DejaVu Sans Book";
         final int fontSize = someIntegerBetween(1, 32);
 
         // When
-        final Font actual = factory.create(font, fontSize);
+        final Font actual = factory.create(fontSize);
 
         // Then
-        assertThat(actual.getName(), equalTo(font));
-        assertThat(actual.getStyle(), equalTo(PLAIN));
-        assertThat(actual.getSize(), equalTo(fontSize));
-    }
-
-    @Test
-    public void Can_create_a_default_font() {
-
-        // Given
-        final String font = someThing(FONTS);
-        final int fontSize = someIntegerBetween(1, 32);
-
-        // When
-        final Font actual = factory.create(font, fontSize);
-
-        // Then
-        assertThat(actual.getName(), equalTo(font));
+        assertThat(actual.getName(), equalTo("DejaVu Sans Book"));
         assertThat(actual.getStyle(), equalTo(PLAIN));
         assertThat(actual.getSize(), equalTo(fontSize));
     }
@@ -88,12 +70,12 @@ public class DejaVuSansFontFactoryTest {
         final IOException exception = new IOException();
 
         // Given
-        given(resourceFactory.find(DEJA_VU_SANS_TTF)).willThrow(exception);
+        given(resourceFactory.find(fontFile)).willThrow(exception);
         expectedException.expect(BadgeFontException.class);
-        expectedException.expectMessage(equalTo(format("Failed to load font file (%s)", DEJA_VU_SANS_TTF)));
+        expectedException.expectMessage(equalTo(format("Failed to load font file (%s)", fontFile)));
         expectedException.expectCause(is(exception));
 
         // When
-        new DejaVuSansFontFactory(resourceFactory);
+        new FontFactory(resourceFactory, fontFile);
     }
 }

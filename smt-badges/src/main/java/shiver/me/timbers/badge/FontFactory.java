@@ -17,10 +17,32 @@
 package shiver.me.timbers.badge;
 
 import java.awt.*;
+import java.io.IOException;
+
+import static java.awt.Font.PLAIN;
+import static java.awt.Font.TRUETYPE_FONT;
+import static java.awt.Font.createFont;
 
 /**
  * @author Karl Bennett
  */
-public interface FontFactory {
-    Font create(String font, int fontSize);
+public class FontFactory {
+
+    private final Font font;
+
+    public FontFactory(String fontFile) {
+        this(new ResourceFactory(), fontFile);
+    }
+
+    public FontFactory(ResourceFactory resourceFactory, String fontFile) {
+        try {
+            this.font = createFont(TRUETYPE_FONT, resourceFactory.find(fontFile));
+        } catch (FontFormatException | IOException e) {
+            throw new BadgeFontException(fontFile, e);
+        }
+    }
+
+    public Font create(int fontSize) {
+        return font.deriveFont(PLAIN, fontSize);
+    }
 }

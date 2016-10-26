@@ -122,7 +122,7 @@ public class BadgeTemplateParserTest {
         final String status = someAlphaNumericString(13);
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
         final OutputStreamWriter writer = new OutputStreamWriter(out);
-        final BadgeData data = new BadgeData(subject, status, null, 0, 0, null, 0, 0, 0, 0, 0, 0, 0);
+        final BadgeData data = new BadgeData(subject, status, null, 0, 0, null, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
         // When
         new DefaultMustacheFactory().compile(TEMPLATE).execute(writer, singletonMap("badge", data));

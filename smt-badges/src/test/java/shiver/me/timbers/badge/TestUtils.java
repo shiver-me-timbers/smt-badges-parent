@@ -27,18 +27,18 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class TestUtils {
 
-    public static int textWidth(String font, int fontSize, String text) {
-        return textWidth(new Font(font, Font.PLAIN, fontSize), text);
-    }
-
     public static int textWidth(Font font, String text) {
         final AffineTransform affinetransform = new AffineTransform();
         final FontRenderContext context = new FontRenderContext(affinetransform, true, false);
         return (int) (font.getStringBounds(text, context).getWidth());
     }
 
+    public static int textShadowY(int height, int padding) {
+        return height - padding;
+    }
+
     public static int textY(int height, int padding) {
-        return height - padding - 1;
+        return textShadowY(height, padding) - 1;
     }
 
     public static String resource(String resource) throws IOException {

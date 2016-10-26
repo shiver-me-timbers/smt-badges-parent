@@ -29,12 +29,16 @@ public class FontMetrics {
 
     private final Font font;
 
-    public FontMetrics(String font, int fontSize) {
-        this(new DejaVuSansFontFactory(), font, fontSize);
+    public FontMetrics(String fontFile, int fontSize) {
+        this(new FontFactory(fontFile), fontSize);
     }
 
-    public FontMetrics(FontFactory fontFactory, String font, int fontSize) {
-        this.font = fontFactory.create(font, fontSize);
+    public FontMetrics(FontFactory fontFactory, int fontSize) {
+        this.font = fontFactory.create(fontSize);
+    }
+
+    public String fontFamily() {
+        return font.getFamily();
     }
 
     /**

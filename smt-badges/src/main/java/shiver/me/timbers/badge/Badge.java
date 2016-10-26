@@ -27,7 +27,7 @@ public class Badge {
 
     static final int HEIGHT = 20;
     static final int PADDING = 5;
-    static final String FONT = "DejaVu Sans";
+    static final String FONT_FILE = "DejaVuSans-webfont.ttf";
     static final int FONT_SIZE = 11;
     static final String TEMPLATE = "badge.mustache";
 
@@ -37,7 +37,7 @@ public class Badge {
         this(
             subject,
             status, colour,
-            new BadgeDataFactory(HEIGHT, PADDING, FONT, FONT_SIZE),
+            new BadgeDataFactory(HEIGHT, PADDING, FONT_FILE, FONT_SIZE),
             new BadgeTemplateParser(TEMPLATE)
         );
     }

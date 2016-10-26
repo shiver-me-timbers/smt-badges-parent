@@ -42,7 +42,6 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.startsWith;
 import static org.junit.Assert.assertThat;
-import static shiver.me.timbers.badge.Badge.FONT;
 import static shiver.me.timbers.badge.Badge.FONT_SIZE;
 import static shiver.me.timbers.badge.Badge.HEIGHT;
 import static shiver.me.timbers.badge.Badge.PADDING;
@@ -81,7 +80,9 @@ public class ITBadge {
         final Element rectangle = findElementById(actual, "smt-badge-subject-rectangle");
         final Element statusPath = findElementById(actual, "smt-badge-status-path");
         final Element textContainer = findElementById(actual, "smt-badge-text-container");
+        final Element subjectTextShadow = findElementById(actual, "smt-badge-subject-shadow");
         final Element subjectText = findElementById(actual, "smt-badge-subject");
+        final Element statusTextShadow = findElementById(actual, "smt-badge-status-shadow");
         final Element statusText = findElementById(actual, "smt-badge-status");
         assertThat(svg.getAttribute("width"), equalTo(badgeWidth));
         assertThat(svg.getAttribute("height"), equalTo(badgeHeight));
@@ -97,11 +98,17 @@ public class ITBadge {
             findElementById(actual, "smt-badge-gradient-path").getAttribute("d"),
             equalTo(gradientPathDirections(badgeWidth, badgeHeight))
         );
-        assertThat(textContainer.getAttribute("font-family"), startsWith(FONT));
+        assertThat(textContainer.getAttribute("font-family"), startsWith(DEFAULT_FONT.getFamily()));
         assertThat(textContainer.getAttribute("font-size"), equalTo(valueOf(FONT_SIZE)));
+        assertThat(subjectTextShadow.getAttribute("x"), equalTo(subjectX(subject)));
+        assertThat(subjectTextShadow.getAttribute("y"), equalTo(textShadowY()));
+        assertThat(subjectTextShadow.getTextContent(), equalTo(subject));
         assertThat(subjectText.getAttribute("x"), equalTo(subjectX(subject)));
         assertThat(subjectText.getAttribute("y"), equalTo(textY()));
         assertThat(subjectText.getTextContent(), equalTo(subject));
+        assertThat(statusTextShadow.getAttribute("x"), equalTo(statusX(subject, status)));
+        assertThat(statusTextShadow.getAttribute("y"), equalTo(textShadowY()));
+        assertThat(statusTextShadow.getTextContent(), equalTo(status));
         assertThat(statusText.getAttribute("x"), equalTo(statusX(subject, status)));
         assertThat(statusText.getAttribute("y"), equalTo(textY()));
         assertThat(statusText.getTextContent(), equalTo(status));
@@ -140,6 +147,10 @@ public class ITBadge {
 
     private static String gradientPathDirections(String badgeWidth, String badgeHeight) {
         return pathDirections(0, 0, Integer.valueOf(badgeWidth), Integer.valueOf(badgeHeight), 0);
+    }
+
+    private static String textShadowY() {
+        return valueOf(TestUtils.textShadowY(HEIGHT, PADDING));
     }
 
     private static String textY() {

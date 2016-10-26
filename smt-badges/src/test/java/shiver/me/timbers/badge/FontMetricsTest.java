@@ -21,6 +21,7 @@ import org.junit.Test;
 import java.awt.*;
 
 import static org.hamcrest.Matchers.closeTo;
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
@@ -36,17 +37,38 @@ public class FontMetricsTest {
     public void Can_find_the_width_of_some_text_within_a_certain_font() {
 
         final FontFactory fontFactory = mock(FontFactory.class);
-        final String font = someThing(FONTS);
         final int fontSize = someIntegerBetween(1, 32);
         final String text = someString();
 
+        final Font font = new Font(someThing(FONTS), Font.PLAIN, fontSize);
+
         // Given
-        given(fontFactory.create(font, fontSize)).willReturn(new Font(font, Font.PLAIN, fontSize));
+        given(fontFactory.create(fontSize)).willReturn(font);
 
         // When
-        final double actual = new FontMetrics(fontFactory, font, fontSize).calculateWidth(text);
+        final double actual = new FontMetrics(fontFactory, fontSize).calculateWidth(text);
 
         // Then
-        assertThat(actual, closeTo(textWidth(font, fontSize, text), 0.001));
+        assertThat(actual, closeTo(textWidth(font, text), 0.001));
+    }
+
+    @Test
+    public void Can_get_the_font_family() {
+
+        final FontFactory fontFactory = mock(FontFactory.class);
+        final int fontSize = someIntegerBetween(1, 32);
+
+        final Font font = mock(Font.class);
+        final String fontFamily = someString();
+
+        // Given
+        given(fontFactory.create(fontSize)).willReturn(font);
+        given(font.getFamily()).willReturn(fontFamily);
+
+        // When
+        final String actual = new FontMetrics(fontFactory, fontSize).fontFamily();
+
+        // Then
+        assertThat(actual, is(fontFamily));
     }
 }

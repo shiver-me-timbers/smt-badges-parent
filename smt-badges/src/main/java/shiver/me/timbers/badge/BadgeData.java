@@ -28,12 +28,16 @@ public class BadgeData {
     private final Colour colour;
     private final int width;
     private final int height;
-    private final String font;
+    private final String fontFamily;
     private final int fontSize;
     private final int subjectWidth;
     private final int statusWidth;
+    private final int subjectShadowX;
+    private final int subjectShadowY;
     private final int subjectX;
     private final int subjectY;
+    private final int statusShadowX;
+    private final int statusShadowY;
     private final int statusX;
     private final int statusY;
 
@@ -43,12 +47,16 @@ public class BadgeData {
         Colour colour,
         int width,
         int height,
-        String font,
-        int fontSize,
+        String fontFamily,
+        int fontSize, 
         int subjectWidth,
         int statusWidth,
+        int subjectShadowX,
+        int subjectShadowY,
         int subjectX,
         int subjectY,
+        int statusShadowX,
+        int statusShadowY,
         int statusX,
         int statusY
     ) {
@@ -57,12 +65,16 @@ public class BadgeData {
         this.colour = colour;
         this.width = width;
         this.height = height;
-        this.font = font;
+        this.fontFamily = fontFamily;
         this.fontSize = fontSize;
         this.subjectWidth = subjectWidth;
         this.statusWidth = statusWidth;
+        this.subjectShadowX = subjectShadowX;
+        this.subjectShadowY = subjectShadowY;
         this.subjectX = subjectX;
         this.subjectY = subjectY;
+        this.statusShadowX = statusShadowX;
+        this.statusShadowY = statusShadowY;
         this.statusX = statusX;
         this.statusY = statusY;
     }
@@ -87,8 +99,8 @@ public class BadgeData {
         return height;
     }
 
-    public String getFont() {
-        return font;
+    public String getFontFamily() {
+        return fontFamily;
     }
 
     public int getFontSize() {
@@ -103,12 +115,28 @@ public class BadgeData {
         return statusWidth;
     }
 
+    public int getSubjectShadowX() {
+        return subjectShadowX;
+    }
+
+    public int getSubjectShadowY() {
+        return subjectShadowY;
+    }
+
     public int getSubjectX() {
         return subjectX;
     }
 
     public int getSubjectY() {
         return subjectY;
+    }
+
+    public int getStatusShadowX() {
+        return statusShadowX;
+    }
+
+    public int getStatusShadowY() {
+        return statusShadowY;
     }
 
     public int getStatusX() {

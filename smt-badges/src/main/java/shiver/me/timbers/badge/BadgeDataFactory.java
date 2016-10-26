@@ -21,21 +21,18 @@ package shiver.me.timbers.badge;
  */
 public class BadgeDataFactory {
 
-
     private final int height;
     private final int padding;
-    private final String font;
     private final int fontSize;
     private final FontMetrics fontMetrics;
 
-    public BadgeDataFactory(int height, int padding, String font, int fontSize) {
-        this(height, padding, font, fontSize, new FontMetrics(font, fontSize));
+    public BadgeDataFactory(int height, int padding, String fontFile, int fontSize) {
+        this(height, padding, fontSize, new FontMetrics(fontFile, fontSize));
     }
 
-    public BadgeDataFactory(int height, int padding, String font, int fontSize, FontMetrics fontMetrics) {
+    public BadgeDataFactory(int height, int padding, int fontSize, FontMetrics fontMetrics) {
         this.height = height;
         this.padding = padding;
-        this.font = font;
         this.fontSize = fontSize;
         this.fontMetrics = fontMetrics;
     }
@@ -44,9 +41,13 @@ public class BadgeDataFactory {
         final int subjectWidth = textWidth(subject);
         final int statusWidth = textWidth(status);
         final int width = width(subjectWidth, statusWidth);
-        final int subjectX = subjectWidth / 2;
+        final int subjectShadowX = subjectX(subjectWidth);
+        final int subjectShadowY = textShadowY();
+        final int subjectX = subjectX(subjectWidth);
         final int subjectY = textY();
-        final int statusX = subjectWidth + (statusWidth / 2);
+        final int statusShadowX = statusX(subjectWidth, statusWidth);
+        final int statusShadowY = textShadowY();
+        final int statusX = statusX(subjectWidth, statusWidth);
         final int statusY = textY();
         return new BadgeData(
             subject,
@@ -54,15 +55,27 @@ public class BadgeDataFactory {
             colour,
             width,
             height,
-            font,
+            fontMetrics.fontFamily(),
             fontSize,
             subjectWidth,
             statusWidth,
+            subjectShadowX,
+            subjectShadowY,
             subjectX,
             subjectY,
+            statusShadowX,
+            statusShadowY,
             statusX,
             statusY
         );
+    }
+
+    private static int statusX(int subjectWidth, int statusWidth) {
+        return subjectWidth + (subjectX(statusWidth));
+    }
+
+    private static int subjectX(int subjectWidth) {
+        return subjectWidth / 2;
     }
 
     private int textWidth(String text) {
@@ -73,7 +86,11 @@ public class BadgeDataFactory {
         return subjectWidth + statusWidth;
     }
 
+    private int textShadowY() {
+        return height - padding;
+    }
+
     private int textY() {
-        return height - padding - 1;
+        return textShadowY() - 1;
     }
 }
