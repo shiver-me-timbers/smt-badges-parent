@@ -26,7 +26,6 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 import java.awt.*;
@@ -150,10 +149,6 @@ public class ITBadge {
         assertThat(statusText.getAttribute("x"), equalTo(statusX(subject, status)));
         assertThat(statusText.getAttribute("y"), equalTo(textY()));
         assertThat(statusText.getTextContent(), equalTo(status));
-    }
-
-    private Element findElementById(Document document, String id) throws XPathExpressionException {
-        return (Element) XPATH.evaluate(format("//*[@id='%s']", id), document, XPathConstants.NODE);
     }
 
     private static String badgeWidth(String subject, String status) {
