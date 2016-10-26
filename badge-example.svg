@@ -12,7 +12,9 @@
         <path id="smt-badge-gradient-path" fill="url(#smt-badge-gradient)" d="M0 0h104v20H0z" />
     </g>
     <g id="smt-badge-text-container" fill="#fff" text-anchor="middle" font-family="DejaVu Sans,Verdana,Geneva,sans-serif" font-size="11">
+        <text id="smt-badge-subject-shadow" x="22" y="15" fill="#010101" fill-opacity=".3">badge</text>
         <text id="smt-badge-subject" x="22" y="14">badge</text>
+        <text id="smt-badge-status-shadow" x="74" y="15" fill="#010101" fill-opacity=".3">example</text>
         <text id="smt-badge-status" x="74" y="14">example</text>
     </g>
 </svg>
