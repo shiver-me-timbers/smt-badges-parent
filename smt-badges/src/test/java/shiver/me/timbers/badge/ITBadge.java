@@ -74,50 +74,82 @@ public class ITBadge {
         final Document actual = toDocument(new Badge(subject, status, colour));
 
         // Then
-        final Element svg = findElementById(actual, "smt-svg");
         final String badgeWidth = badgeWidth(subject, status);
         final String badgeHeight = valueOf(HEIGHT);
-        final Element rectangle = findElementById(actual, "smt-badge-subject-rectangle");
-        final Element statusPath = findElementById(actual, "smt-badge-status-path");
-        final Element textContainer = findElementById(actual, "smt-badge-text-container");
-        final Element subjectTextShadow = findElementById(actual, "smt-badge-subject-shadow");
-        final Element subjectText = findElementById(actual, "smt-badge-subject");
-        final Element statusTextShadow = findElementById(actual, "smt-badge-status-shadow");
-        final Element statusText = findElementById(actual, "smt-badge-status");
-        assertThat(svg.getAttribute("width"), equalTo(badgeWidth));
-        assertThat(svg.getAttribute("height"), equalTo(badgeHeight));
-        assertThat(rectangle.getAttribute("width"), equalTo(badgeWidth));
-        assertThat(rectangle.getAttribute("height"), equalTo(badgeHeight));
-        assertThat(
-            findElementById(actual, "smt-badge-subject-path").getAttribute("d"),
-            equalTo(subjectPathDirections(subject, badgeHeight))
-        );
-        assertThat(statusPath.getAttribute("d"), equalTo(statusPathDirections(subject, status, badgeHeight)));
-        assertThat(statusPath.getAttribute("fill"), equalTo(colour.toString()));
-        assertThat(
-            findElementById(actual, "smt-badge-gradient-path").getAttribute("d"),
-            equalTo(gradientPathDirections(badgeWidth, badgeHeight))
-        );
-        assertThat(textContainer.getAttribute("font-family"), startsWith(DEFAULT_FONT.getFamily()));
-        assertThat(textContainer.getAttribute("font-size"), equalTo(valueOf(FONT_SIZE)));
-        assertThat(subjectTextShadow.getAttribute("x"), equalTo(subjectX(subject)));
-        assertThat(subjectTextShadow.getAttribute("y"), equalTo(textShadowY()));
-        assertThat(subjectTextShadow.getTextContent(), equalTo(subject));
-        assertThat(subjectText.getAttribute("x"), equalTo(subjectX(subject)));
-        assertThat(subjectText.getAttribute("y"), equalTo(textY()));
-        assertThat(subjectText.getTextContent(), equalTo(subject));
-        assertThat(statusTextShadow.getAttribute("x"), equalTo(statusX(subject, status)));
-        assertThat(statusTextShadow.getAttribute("y"), equalTo(textShadowY()));
-        assertThat(statusTextShadow.getTextContent(), equalTo(status));
-        assertThat(statusText.getAttribute("x"), equalTo(statusX(subject, status)));
-        assertThat(statusText.getAttribute("y"), equalTo(textY()));
-        assertThat(statusText.getTextContent(), equalTo(status));
+        assertSvg(actual, badgeWidth, badgeHeight);
+        assertSubjectRectangle(actual, badgeWidth, badgeHeight);
+        assertStatusRectangle(actual, subject, status, colour, badgeHeight);
+        assertDividerPath(actual, subject, colour, badgeHeight);
+        assertGradientRectangle(actual, badgeWidth, badgeHeight);
+        assertTextContainer(actual);
+        assertSubject(actual, subject);
+        assertStatus(actual, subject, status);
     }
 
     private static Document toDocument(Badge badge) throws ParserConfigurationException, IOException, SAXException {
         final DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         final DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
         return dBuilder.parse(new ByteArrayInputStream(badge.toString().getBytes(UTF_8)));
+    }
+
+    private void assertSvg(Document actual, String badgeWidth, String badgeHeight) throws XPathExpressionException {
+        final Element svg = findElementById(actual, "smt-svg");
+        assertThat(svg.getAttribute("width"), equalTo(badgeWidth));
+        assertThat(svg.getAttribute("height"), equalTo(badgeHeight));
+    }
+
+    private void assertSubjectRectangle(Document actual, String badgeWidth, String badgeHeight) throws XPathExpressionException {
+        final Element subjectRectangle = findElementById(actual, "smt-badge-subject-rectangle");
+        assertThat(subjectRectangle.getAttribute("width"), equalTo(badgeWidth));
+        assertThat(subjectRectangle.getAttribute("height"), equalTo(badgeHeight));
+    }
+
+    private void assertStatusRectangle(Document actual, String subject, String status, Colour colour, String badgeHeight) throws XPathExpressionException {
+        final Element statusRectangle = findElementById(actual, "smt-badge-status-rectangle");
+        assertThat(statusRectangle.getAttribute("x"), equalTo(String.valueOf(textWidth(subject))));
+        assertThat(statusRectangle.getAttribute("width"), equalTo(String.valueOf(textWidth(status))));
+        assertThat(statusRectangle.getAttribute("height"), equalTo(badgeHeight));
+        assertThat(statusRectangle.getAttribute("fill"), equalTo(colour.toString()));
+    }
+
+    private void assertDividerPath(Document actual, String subject, Colour colour, String badgeHeight) throws XPathExpressionException {
+        final Element dividerPath = findElementById(actual, "smt-badge-divider-path");
+        assertThat(dividerPath.getAttribute("d"), equalTo(dividerPathDirections(subject, badgeHeight)));
+        assertThat(dividerPath.getAttribute("fill"), equalTo(colour.toString()));
+    }
+
+    private void assertGradientRectangle(Document actual, String badgeWidth, String badgeHeight) throws XPathExpressionException {
+        final Element gradientRectangle = findElementById(actual, "smt-badge-gradient-rectangle");
+        assertThat(gradientRectangle.getAttribute("width"), equalTo(badgeWidth));
+        assertThat(gradientRectangle.getAttribute("height"), equalTo(badgeHeight));
+    }
+
+    private void assertTextContainer(Document actual) throws XPathExpressionException {
+        final Element textContainer = findElementById(actual, "smt-badge-text-container");
+        assertThat(textContainer.getAttribute("font-family"), startsWith(DEFAULT_FONT.getFamily()));
+        assertThat(textContainer.getAttribute("font-size"), equalTo(valueOf(FONT_SIZE)));
+    }
+
+    private void assertSubject(Document actual, String subject) throws XPathExpressionException {
+        final Element subjectTextShadow = findElementById(actual, "smt-badge-subject-shadow");
+        final Element subjectText = findElementById(actual, "smt-badge-subject");
+        assertThat(subjectTextShadow.getAttribute("x"), equalTo(subjectX(subject)));
+        assertThat(subjectTextShadow.getAttribute("y"), equalTo(textShadowY()));
+        assertThat(subjectTextShadow.getTextContent(), equalTo(subject));
+        assertThat(subjectText.getAttribute("x"), equalTo(subjectX(subject)));
+        assertThat(subjectText.getAttribute("y"), equalTo(textY()));
+        assertThat(subjectText.getTextContent(), equalTo(subject));
+    }
+
+    private void assertStatus(Document actual, String subject, String status) throws XPathExpressionException {
+        final Element statusTextShadow = findElementById(actual, "smt-badge-status-shadow");
+        final Element statusText = findElementById(actual, "smt-badge-status");
+        assertThat(statusTextShadow.getAttribute("x"), equalTo(statusX(subject, status)));
+        assertThat(statusTextShadow.getAttribute("y"), equalTo(textShadowY()));
+        assertThat(statusTextShadow.getTextContent(), equalTo(status));
+        assertThat(statusText.getAttribute("x"), equalTo(statusX(subject, status)));
+        assertThat(statusText.getAttribute("y"), equalTo(textY()));
+        assertThat(statusText.getTextContent(), equalTo(status));
     }
 
     private Element findElementById(Document document, String id) throws XPathExpressionException {
@@ -128,25 +160,17 @@ public class ITBadge {
         return valueOf(textWidth(subject) + textWidth(status));
     }
 
-    private static String subjectPathDirections(String subject, String badgeHeight) {
-        return pathDirections(0, 0, textWidth(subject), Integer.valueOf(badgeHeight), 0);
-    }
-
     private static String pathDirections(int x, int y, int h, int v, int H) {
         return format("M%s %sh%sv%sH%sz", x, y, h, v, H);
     }
 
-    private static String statusPathDirections(String subject, String status, String badgeHeight) {
+    private static String dividerPathDirections(String subject, String badgeHeight) {
         final int subjectWidth = textWidth(subject);
-        return pathDirections(subjectWidth, 0, textWidth(status), Integer.valueOf(badgeHeight), subjectWidth);
+        return pathDirections(subjectWidth, 0, 4, Integer.valueOf(badgeHeight), subjectWidth);
     }
 
     private static int textWidth(String text) {
         return TestUtils.textWidth(DEFAULT_FONT.deriveFont(PLAIN, FONT_SIZE), text) + (PADDING * 2);
-    }
-
-    private static String gradientPathDirections(String badgeWidth, String badgeHeight) {
-        return pathDirections(0, 0, Integer.valueOf(badgeWidth), Integer.valueOf(badgeHeight), 0);
     }
 
     private static String textShadowY() {

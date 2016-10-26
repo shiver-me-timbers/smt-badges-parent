@@ -3,14 +3,10 @@
         <stop offset="0" stop-color="#bbb" stop-opacity=".1" />
         <stop offset="1" stop-opacity=".1" />
     </linearGradient>
-    <mask id="smt-badge-subject-rectangle-mask">
-        <rect id="smt-badge-subject-rectangle" width="{{badge.width}}" height="{{badge.height}}" rx="3" fill="#fff" />
-    </mask>
-    <g mask="url(#smt-badge-subject-rectangle-mask)">
-        <path id="smt-badge-subject-path" fill="#555" d="M0 0h{{badge.subjectWidth}}v{{badge.height}}H0z" />
-        <path id="smt-badge-status-path" fill="{{badge.colour}}" d="M{{badge.subjectWidth}} 0h{{badge.statusWidth}}v20H{{badge.subjectWidth}}z" />
-        <path id="smt-badge-gradient-path" fill="url(#smt-badge-gradient)" d="M0 0h{{badge.width}}v20H0z" />
-    </g>
+    <rect id="smt-badge-subject-rectangle" rx="3" width="{{badge.width}}" height="{{badge.height}}" fill="#555" />
+    <rect id="smt-badge-status-rectangle" rx="3" x="{{badge.subjectWidth}}" width="{{badge.statusWidth}}" height="{{badge.height}}" fill="{{badge.colour}}" />
+    <path id="smt-badge-divider-path" fill="{{badge.colour}}" d="M{{badge.subjectWidth}} 0h4v{{badge.height}}H{{badge.subjectWidth}}z" />
+    <rect id="smt-badge-gradient-rectangle" rx="3" width="{{badge.width}}" height="{{badge.height}}" fill="url(#smt-badge-gradient)" />
     <g id="smt-badge-text-container" fill="#fff" text-anchor="middle" font-family="{{badge.fontFamily}},Verdana,Geneva,sans-serif" font-size="{{badge.fontSize}}">
         <text id="smt-badge-subject-shadow" x="{{badge.subjectX}}" y="{{badge.textShadowY}}" fill="#010101" fill-opacity=".3">{{badge.subject}}</text>
         <text id="smt-badge-subject" x="{{badge.subjectX}}" y="{{badge.textY}}">{{badge.subject}}</text>
