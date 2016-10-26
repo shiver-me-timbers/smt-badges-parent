@@ -1,20 +1,16 @@
-<svg id="smt-svg" xmlns="http://www.w3.org/2000/svg" width="104" height="20">
-    <linearGradient id="smt-badge-gradient" x2="0" y2="100%">
+<svg xmlns="http://www.w3.org/2000/svg" width="104" height="20">
+    <linearGradient id="smt-bg" x2="0" y2="100%">
         <stop offset="0" stop-color="#bbb" stop-opacity=".1" />
         <stop offset="1" stop-opacity=".1" />
     </linearGradient>
-    <mask id="smt-badge-subject-rectangle-mask">
-        <rect id="smt-badge-subject-rectangle" width="104" height="20" rx="3" fill="#fff" />
-    </mask>
-    <g mask="url(#smt-badge-subject-rectangle-mask)">
-        <path id="smt-badge-subject-path" fill="#555" d="M0 0h45v20H0z" />
-        <path id="smt-badge-status-path" fill="#4c1" d="M45 0h59v20H45z" />
-        <path id="smt-badge-gradient-path" fill="url(#smt-badge-gradient)" d="M0 0h104v20H0z" />
-    </g>
-    <g id="smt-badge-text-container" fill="#fff" text-anchor="middle" font-family="DejaVu Sans,Verdana,Geneva,sans-serif" font-size="11">
-        <text id="smt-badge-subject-shadow" x="22" y="15" fill="#010101" fill-opacity=".3">badge</text>
-        <text id="smt-badge-subject" x="22" y="14">badge</text>
-        <text id="smt-badge-status-shadow" x="74" y="15" fill="#010101" fill-opacity=".3">example</text>
-        <text id="smt-badge-status" x="74" y="14">example</text>
+    <rect rx="3" width="104" height="20" fill="#555" />
+    <rect rx="3" x="45" width="59" height="20" fill="#4c1" />
+    <path fill="#4c1" d="M45 0h4v20H45z" />
+    <rect rx="3" width="104" height="20" fill="url(#smt-bg)" />
+    <g fill="#fff" text-anchor="middle" font-family="DejaVu Sans,Verdana,Geneva,sans-serif" font-size="11">
+        <text x="22" y="15" fill="#010101" fill-opacity=".3">badge</text>
+        <text x="22" y="14">badge</text>
+        <text x="74" y="15" fill="#010101" fill-opacity=".3">example</text>
+        <text x="74" y="14">example</text>
     </g>
 </svg>
