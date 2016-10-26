@@ -69,14 +69,10 @@ public class BadgeDataFactoryTest {
         assertThat(actual, hasField("statusWidth", statusContainerWidth));
         assertThat(actual, hasField("fontFamily", fontFamily));
         assertThat(actual, hasField("fontSize", fontSize));
-        assertThat(actual, hasField("subjectShadowX", subjectX));
-        assertThat(actual, hasField("subjectShadowY", textShadowY(height, padding)));
         assertThat(actual, hasField("subjectX", subjectX));
-        assertThat(actual, hasField("subjectY", textY(height, padding)));
-        assertThat(actual, hasField("statusShadowX", statusX));
-        assertThat(actual, hasField("statusShadowY", textShadowY(height, padding)));
         assertThat(actual, hasField("statusX", statusX));
-        assertThat(actual, hasField("statusY", textY(height, padding)));
+        assertThat(actual, hasField("textShadowY", textShadowY(height, padding)));
+        assertThat(actual, hasField("textY", textY(height, padding)));
     }
 
     private int width(int padding, double text) {

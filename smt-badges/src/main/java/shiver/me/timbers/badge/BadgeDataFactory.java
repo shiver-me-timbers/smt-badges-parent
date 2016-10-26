@@ -41,14 +41,10 @@ public class BadgeDataFactory {
         final int subjectWidth = textWidth(subject);
         final int statusWidth = textWidth(status);
         final int width = width(subjectWidth, statusWidth);
-        final int subjectShadowX = subjectX(subjectWidth);
-        final int subjectShadowY = textShadowY();
         final int subjectX = subjectX(subjectWidth);
-        final int subjectY = textY();
-        final int statusShadowX = statusX(subjectWidth, statusWidth);
-        final int statusShadowY = textShadowY();
         final int statusX = statusX(subjectWidth, statusWidth);
-        final int statusY = textY();
+        final int textShadowY = textShadowY();
+        final int textY = textY();
         return new BadgeData(
             subject,
             status,
@@ -59,14 +55,10 @@ public class BadgeDataFactory {
             fontSize,
             subjectWidth,
             statusWidth,
-            subjectShadowX,
-            subjectShadowY,
             subjectX,
-            subjectY,
-            statusShadowX,
-            statusShadowY,
             statusX,
-            statusY
+            textShadowY,
+            textY
         );
     }
 
