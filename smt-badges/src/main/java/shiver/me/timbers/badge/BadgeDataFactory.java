@@ -37,7 +37,7 @@ public class BadgeDataFactory {
         this.fontMetrics = fontMetrics;
     }
 
-    public BadgeData create(String subject, String status, Colour colour) {
+    public BadgeData create(String subject, String status, Colour colour, Style style) {
         final int subjectWidth = textWidth(subject);
         final int statusWidth = textWidth(status);
         final int width = width(subjectWidth, statusWidth);
@@ -49,6 +49,7 @@ public class BadgeDataFactory {
             subject,
             status,
             colour,
+            style,
             width,
             height,
             fontMetrics.fontFamily(),

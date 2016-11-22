@@ -16,6 +16,8 @@
 
 package shiver.me.timbers.badge;
 
+import static shiver.me.timbers.badge.Style.flat;
+
 /**
  * This class is used to generate the XML for an SVG badge that are usually used to show metrics on source code
  * repositories. The design of this badge has been copied from http://shields.io and attempts to follow their
@@ -34,11 +36,16 @@ public class Badge {
     private final String svg;
 
     public Badge(String subject, String status, Colour colour) {
+        this(subject, status, colour, flat);
+    }
+
+    public Badge(String subject, String status, Colour colour, Style style) {
         this(
             subject,
             status, colour,
             new BadgeDataFactory(HEIGHT, PADDING, FONT_FILE, FONT_SIZE),
-            new BadgeTemplateParser(TEMPLATE)
+            new BadgeTemplateParser(TEMPLATE),
+            style
         );
     }
 
@@ -47,9 +54,10 @@ public class Badge {
         String status,
         Colour colour,
         BadgeDataFactory dataFactory,
-        BadgeTemplateParser template
+        BadgeTemplateParser template,
+        Style style
     ) {
-        this.svg = template.generate(dataFactory.create(subject, status, colour));
+        this.svg = template.generate(dataFactory.create(subject, status, colour, style));
     }
 
     @Override

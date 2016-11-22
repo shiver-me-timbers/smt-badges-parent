@@ -38,6 +38,7 @@ public class BadgeTest {
         final String subject = someString();
         final String status = someString();
         final Colour colour = someEnum(Colour.class);
+        final Style style = someEnum(Style.class);
         final BadgeDataFactory dataFactory = mock(BadgeDataFactory.class);
         final BadgeTemplateParser template = mock(BadgeTemplateParser.class);
 
@@ -46,11 +47,12 @@ public class BadgeTest {
         final String expected = someString();
 
         // Given
-        given(dataFactory.create(subject, status, colour)).willReturn(data);
+        given(dataFactory.create(subject, status, colour, style)).willReturn(data);
         given(template.generate(data)).willReturn(expected);
 
         // When
-        final String actual = new Badge(subject, status, colour, dataFactory, template).toString();
+        final String actual = new Badge(subject, status, colour, dataFactory, template, style)
+            .toString();
 
         // Then
         assertThat(actual, is(expected));

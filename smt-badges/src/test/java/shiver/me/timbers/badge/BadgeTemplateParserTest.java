@@ -48,6 +48,7 @@ import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static shiver.me.timbers.badge.Badge.TEMPLATE;
+import static shiver.me.timbers.badge.Style.plastic;
 import static shiver.me.timbers.data.random.RandomStrings.someAlphaNumericString;
 import static shiver.me.timbers.data.random.RandomStrings.someString;
 
@@ -122,7 +123,7 @@ public class BadgeTemplateParserTest {
         final String status = someAlphaNumericString(13);
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
         final OutputStreamWriter writer = new OutputStreamWriter(out);
-        final BadgeData data = new BadgeData(subject, status, null, 0, 0, null, 0, 0, 0, 0, 0, 0, 0);
+        final BadgeData data = new BadgeData(subject, status, null, plastic, 0, 0, null, 0, 0, 0, 0, 0, 0, 0);
 
         // When
         new DefaultMustacheFactory().compile(TEMPLATE).execute(writer, singletonMap("badge", data));

@@ -42,6 +42,7 @@ public class BadgeDataFactoryTest {
         final String subject = someString();
         final String status = someString();
         final Colour colour = someEnum(Colour.class);
+        final Style style = someEnum(Style.class);
 
         final double subjectWidth = someDouble();
         final double statusWidth = someDouble();
@@ -53,7 +54,7 @@ public class BadgeDataFactoryTest {
 
         // When
         final BadgeData actual = new BadgeDataFactory(height, padding, fontSize, fontMetrics)
-            .create(subject, status, colour);
+            .create(subject, status, colour, style);
 
         // Then
         final int subjectContainerWidth = width(padding, subjectWidth);
@@ -63,6 +64,7 @@ public class BadgeDataFactoryTest {
         assertThat(actual, hasField("subject", subject));
         assertThat(actual, hasField("status", status));
         assertThat(actual, hasField("colour", colour));
+        assertThat(actual, hasField("style", style));
         assertThat(actual, hasField("width", width(padding, subjectWidth, statusWidth)));
         assertThat(actual, hasField("height", height));
         assertThat(actual, hasField("subjectWidth", subjectContainerWidth));

@@ -16,6 +16,9 @@
 
 package shiver.me.timbers.badge;
 
+import static shiver.me.timbers.badge.Style.flat;
+import static shiver.me.timbers.badge.Style.plastic;
+
 /**
  * This class holds all thr data that will be used by the {@link BadgeTemplateParser} to generate the SVG XML.
  *
@@ -26,6 +29,7 @@ public class BadgeData {
     private final String subject;
     private final String status;
     private final Colour colour;
+    private final Style style;
     private final int width;
     private final int height;
     private final String fontFamily;
@@ -41,6 +45,7 @@ public class BadgeData {
         String subject,
         String status,
         Colour colour,
+        Style style,
         int width,
         int height,
         String fontFamily,
@@ -55,6 +60,7 @@ public class BadgeData {
         this.subject = subject;
         this.status = status;
         this.colour = colour;
+        this.style = style;
         this.width = width;
         this.height = height;
         this.fontFamily = fontFamily;
@@ -77,6 +83,14 @@ public class BadgeData {
 
     public Colour getColour() {
         return colour;
+    }
+
+    public boolean isFlat() {
+        return style == null || style == flat;
+    }
+
+    public boolean isPlastic() {
+        return plastic.equals(style);
     }
 
     public int getWidth() {

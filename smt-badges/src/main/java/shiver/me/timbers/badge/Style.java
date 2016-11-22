@@ -14,30 +14,12 @@
  * limitations under the License.
  */
 
-module.exports = function (config) {
-  config.set({
+package shiver.me.timbers.badge;
 
-    basePath: '',
-
-    frameworks: ['jasmine', 'jsmockito-jshamcrest'],
-
-    files: [
-      'src/main/resources/badge.js',
-      'src/test/javascript/**/*spec.js'
-    ],
-
-    reporters: ['progress'],
-
-    port: 9876,
-
-    colors: true,
-
-    logLevel: config.LOG_INFO,
-
-    autoWatch: false,
-
-    browsers: ['Chrome'],
-
-    singleRun: false
-  })
-};
+/**
+ * @author Karl Bennett
+ */
+public enum Style {
+    flat,
+    plastic
+}

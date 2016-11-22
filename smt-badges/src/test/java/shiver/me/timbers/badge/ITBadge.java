@@ -16,49 +16,33 @@
 
 package shiver.me.timbers.badge;
 
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathExpressionException;
-import javax.xml.xpath.XPathFactory;
-import java.awt.*;
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
-import static java.awt.Font.PLAIN;
-import static java.awt.Font.TRUETYPE_FONT;
-import static java.awt.Font.createFont;
-import static java.lang.String.format;
 import static java.lang.String.valueOf;
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.startsWith;
-import static org.junit.Assert.assertThat;
-import static shiver.me.timbers.badge.Badge.FONT_SIZE;
 import static shiver.me.timbers.badge.Badge.HEIGHT;
-import static shiver.me.timbers.badge.Badge.PADDING;
+import static shiver.me.timbers.badge.BadgeTestUtils.assertDividerPath;
+import static shiver.me.timbers.badge.BadgeTestUtils.assertFlatGradient;
+import static shiver.me.timbers.badge.BadgeTestUtils.assertGradientRectangle;
+import static shiver.me.timbers.badge.BadgeTestUtils.assertPlasticGradient;
+import static shiver.me.timbers.badge.BadgeTestUtils.assertStatus;
+import static shiver.me.timbers.badge.BadgeTestUtils.assertStatusRectangle;
+import static shiver.me.timbers.badge.BadgeTestUtils.assertSubject;
+import static shiver.me.timbers.badge.BadgeTestUtils.assertSubjectRectangle;
+import static shiver.me.timbers.badge.BadgeTestUtils.assertSvg;
+import static shiver.me.timbers.badge.BadgeTestUtils.assertTextContainer;
+import static shiver.me.timbers.badge.BadgeTestUtils.badgeWidth;
+import static shiver.me.timbers.badge.BadgeTestUtils.toDocument;
+import static shiver.me.timbers.badge.Style.plastic;
 import static shiver.me.timbers.data.random.RandomEnums.someEnum;
 import static shiver.me.timbers.data.random.RandomStrings.someAlphaNumericString;
 
 public class ITBadge {
-
-    private static final XPath XPATH = XPathFactory.newInstance().newXPath();
-    private static Font DEFAULT_FONT;
-
-    @BeforeClass
-    public static void setUp() throws IOException, FontFormatException {
-        DEFAULT_FONT = createFont(
-            TRUETYPE_FONT,
-            Thread.currentThread().getContextClassLoader().getResourceAsStream("DejaVuSans-webfont.ttf")
-        );
-    }
 
     @Test
     public void Can_create_a_badge()
@@ -76,6 +60,7 @@ public class ITBadge {
         final String badgeWidth = badgeWidth(subject, status);
         final String badgeHeight = valueOf(HEIGHT);
         assertSvg(actual, badgeWidth, badgeHeight);
+        assertFlatGradient(actual);
         assertSubjectRectangle(actual, badgeWidth, badgeHeight);
         assertStatusRectangle(actual, subject, status, colour, badgeHeight);
         assertDividerPath(actual, subject, colour, badgeHeight);
@@ -85,102 +70,16 @@ public class ITBadge {
         assertStatus(actual, subject, status);
     }
 
-    private static Document toDocument(Badge badge) throws ParserConfigurationException, IOException, SAXException {
-        final DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-        final DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-        return dBuilder.parse(new ByteArrayInputStream(badge.toString().getBytes(UTF_8)));
-    }
+    @Test
+    public void Can_create_a_badge_with_the_plastic_style()
+        throws ParserConfigurationException, IOException, SAXException, XPathExpressionException {
 
-    private void assertSvg(Document actual, String badgeWidth, String badgeHeight) throws XPathExpressionException {
-        final Element svg = (Element) actual.getElementsByTagName("svg").item(0);
-        assertThat(svg.getAttribute("width"), equalTo(badgeWidth));
-        assertThat(svg.getAttribute("height"), equalTo(badgeHeight));
-    }
+        // When
+        final Document actual = toDocument(
+            new Badge(someAlphaNumericString(8), someAlphaNumericString(13), someEnum(Colour.class), plastic)
+        );
 
-    private void assertSubjectRectangle(Document actual, String badgeWidth, String badgeHeight) throws XPathExpressionException {
-        final Element subjectRectangle = (Element) actual.getElementsByTagName("rect").item(0);
-        assertThat(subjectRectangle.getAttribute("width"), equalTo(badgeWidth));
-        assertThat(subjectRectangle.getAttribute("height"), equalTo(badgeHeight));
-    }
-
-    private void assertStatusRectangle(Document actual, String subject, String status, Colour colour, String badgeHeight) throws XPathExpressionException {
-        final Element statusRectangle = (Element) actual.getElementsByTagName("rect").item(1);
-        assertThat(statusRectangle.getAttribute("x"), equalTo(String.valueOf(textWidth(subject))));
-        assertThat(statusRectangle.getAttribute("width"), equalTo(String.valueOf(textWidth(status))));
-        assertThat(statusRectangle.getAttribute("height"), equalTo(badgeHeight));
-        assertThat(statusRectangle.getAttribute("fill"), equalTo(colour.toString()));
-    }
-
-    private void assertDividerPath(Document actual, String subject, Colour colour, String badgeHeight) throws XPathExpressionException {
-        final Element dividerPath = (Element) actual.getElementsByTagName("path").item(0);
-        assertThat(dividerPath.getAttribute("d"), equalTo(dividerPathDirections(subject, badgeHeight)));
-        assertThat(dividerPath.getAttribute("fill"), equalTo(colour.toString()));
-    }
-
-    private void assertGradientRectangle(Document actual, String badgeWidth, String badgeHeight) throws XPathExpressionException {
-        final Element gradientRectangle = (Element) actual.getElementsByTagName("rect").item(2);
-        assertThat(gradientRectangle.getAttribute("width"), equalTo(badgeWidth));
-        assertThat(gradientRectangle.getAttribute("height"), equalTo(badgeHeight));
-    }
-
-    private void assertTextContainer(Document actual) throws XPathExpressionException {
-        final Element textContainer = (Element) actual.getElementsByTagName("g").item(0);
-        assertThat(textContainer.getAttribute("font-family"), startsWith(DEFAULT_FONT.getFamily()));
-        assertThat(textContainer.getAttribute("font-size"), equalTo(valueOf(FONT_SIZE)));
-    }
-
-    private void assertSubject(Document actual, String subject) throws XPathExpressionException {
-        final Element subjectTextShadow = (Element) actual.getElementsByTagName("text").item(0);
-        final Element subjectText = (Element) actual.getElementsByTagName("text").item(1);
-        assertThat(subjectTextShadow.getAttribute("x"), equalTo(subjectX(subject)));
-        assertThat(subjectTextShadow.getAttribute("y"), equalTo(textShadowY()));
-        assertThat(subjectTextShadow.getTextContent(), equalTo(subject));
-        assertThat(subjectText.getAttribute("x"), equalTo(subjectX(subject)));
-        assertThat(subjectText.getAttribute("y"), equalTo(textY()));
-        assertThat(subjectText.getTextContent(), equalTo(subject));
-    }
-
-    private void assertStatus(Document actual, String subject, String status) throws XPathExpressionException {
-        final Element statusTextShadow = (Element) actual.getElementsByTagName("text").item(2);
-        final Element statusText = (Element) actual.getElementsByTagName("text").item(3);
-        assertThat(statusTextShadow.getAttribute("x"), equalTo(statusX(subject, status)));
-        assertThat(statusTextShadow.getAttribute("y"), equalTo(textShadowY()));
-        assertThat(statusTextShadow.getTextContent(), equalTo(status));
-        assertThat(statusText.getAttribute("x"), equalTo(statusX(subject, status)));
-        assertThat(statusText.getAttribute("y"), equalTo(textY()));
-        assertThat(statusText.getTextContent(), equalTo(status));
-    }
-
-    private static String badgeWidth(String subject, String status) {
-        return valueOf(textWidth(subject) + textWidth(status));
-    }
-
-    private static String pathDirections(int x, int y, int h, int v, int H) {
-        return format("M%s %sh%sv%sH%sz", x, y, h, v, H);
-    }
-
-    private static String dividerPathDirections(String subject, String badgeHeight) {
-        final int subjectWidth = textWidth(subject);
-        return pathDirections(subjectWidth, 0, 4, Integer.valueOf(badgeHeight), subjectWidth);
-    }
-
-    private static int textWidth(String text) {
-        return TestUtils.textWidth(DEFAULT_FONT.deriveFont(PLAIN, FONT_SIZE), text) + (PADDING * 2);
-    }
-
-    private static String textShadowY() {
-        return valueOf(TestUtils.textShadowY(HEIGHT, PADDING));
-    }
-
-    private static String textY() {
-        return valueOf(TestUtils.textY(HEIGHT, PADDING));
-    }
-
-    private static String statusX(String subject, String status) {
-        return valueOf(textWidth(subject) + (textWidth(status) / 2));
-    }
-
-    private static String subjectX(String subject) {
-        return valueOf(textWidth(subject) / 2);
+        // Then
+        assertPlasticGradient(actual);
     }
 }
