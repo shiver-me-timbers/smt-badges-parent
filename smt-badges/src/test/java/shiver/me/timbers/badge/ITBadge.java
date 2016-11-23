@@ -28,6 +28,7 @@ import static java.lang.String.valueOf;
 import static shiver.me.timbers.badge.Badge.HEIGHT;
 import static shiver.me.timbers.badge.BadgeTestUtils.assertDividerPath;
 import static shiver.me.timbers.badge.BadgeTestUtils.assertFlatGradient;
+import static shiver.me.timbers.badge.BadgeTestUtils.assertFlatSquareStyle;
 import static shiver.me.timbers.badge.BadgeTestUtils.assertGradientRectangle;
 import static shiver.me.timbers.badge.BadgeTestUtils.assertPlasticGradient;
 import static shiver.me.timbers.badge.BadgeTestUtils.assertStatus;
@@ -38,6 +39,7 @@ import static shiver.me.timbers.badge.BadgeTestUtils.assertSvg;
 import static shiver.me.timbers.badge.BadgeTestUtils.assertTextContainer;
 import static shiver.me.timbers.badge.BadgeTestUtils.badgeWidth;
 import static shiver.me.timbers.badge.BadgeTestUtils.toDocument;
+import static shiver.me.timbers.badge.Style.flat_square;
 import static shiver.me.timbers.badge.Style.plastic;
 import static shiver.me.timbers.data.random.RandomEnums.someEnum;
 import static shiver.me.timbers.data.random.RandomStrings.someAlphaNumericString;
@@ -81,5 +83,22 @@ public class ITBadge {
 
         // Then
         assertPlasticGradient(actual);
+    }
+
+    @Test
+    public void Can_create_a_badge_with_the_flat_square_style()
+        throws ParserConfigurationException, IOException, SAXException, XPathExpressionException {
+
+        // Given
+        final String subject = someAlphaNumericString(8);
+        final String status = someAlphaNumericString(13);
+
+        // When
+        final Document actual = toDocument(
+            new Badge(subject, status, someEnum(Colour.class), flat_square)
+        );
+
+        // Then
+        assertFlatSquareStyle(actual, subject, status);
     }
 }

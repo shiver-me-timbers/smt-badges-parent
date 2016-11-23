@@ -19,6 +19,7 @@ package shiver.me.timbers.badge;
 import org.apache.commons.io.IOUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -81,10 +82,6 @@ public class BadgeTestUtils {
         assertGradient(actual, "flat-gradient.xml");
     }
 
-    static void assertPlasticGradient(Document actual) throws XPathExpressionException, IOException {
-        assertGradient(actual, "plastic-gradient.xml");
-    }
-
     static void assertSubjectRectangle(Document actual, String badgeWidth, String badgeHeight)
         throws XPathExpressionException {
         final Element subjectRectangle = (Element) actual.getElementsByTagName("rect").item(0);
@@ -128,7 +125,7 @@ public class BadgeTestUtils {
 
     static void assertSubject(Document actual, String subject) throws XPathExpressionException {
         final Element subjectTextShadow = (Element) actual.getElementsByTagName("text").item(0);
-        final Element subjectText = (Element) actual.getElementsByTagName("text").item(1);
+        final Element subjectText = (Element) actual.getElementsByTagName("text").item(2);
         assertThat(subjectTextShadow.getAttribute("x"), equalTo(subjectX(subject)));
         assertThat(subjectTextShadow.getAttribute("y"), equalTo(textShadowY()));
         assertThat(subjectTextShadow.getTextContent(), equalTo(subject));
@@ -138,7 +135,7 @@ public class BadgeTestUtils {
     }
 
     static void assertStatus(Document actual, String subject, String status) throws XPathExpressionException {
-        final Element statusTextShadow = (Element) actual.getElementsByTagName("text").item(2);
+        final Element statusTextShadow = (Element) actual.getElementsByTagName("text").item(1);
         final Element statusText = (Element) actual.getElementsByTagName("text").item(3);
         assertThat(statusTextShadow.getAttribute("x"), equalTo(statusX(subject, status)));
         assertThat(statusTextShadow.getAttribute("y"), equalTo(textShadowY()));
@@ -146,6 +143,21 @@ public class BadgeTestUtils {
         assertThat(statusText.getAttribute("x"), equalTo(statusX(subject, status)));
         assertThat(statusText.getAttribute("y"), equalTo(textY()));
         assertThat(statusText.getTextContent(), equalTo(status));
+    }
+
+    static void assertPlasticGradient(Document actual) throws XPathExpressionException, IOException {
+        assertGradient(actual, "plastic-gradient.xml");
+    }
+
+    static void assertFlatSquareStyle(Document actual, String subject, String status) throws XPathExpressionException, IOException {
+        final NodeList rectangles = actual.getElementsByTagName("rect");
+        final NodeList texts = actual.getElementsByTagName("text");
+        assertThat(rectangles.getLength(), equalTo(2));
+        assertCrispEdges((Element) rectangles.item(0));
+        assertCrispEdges((Element) rectangles.item(1));
+        assertThat(texts.getLength(), equalTo(2));
+        assertThat(texts.item(0).getTextContent(), equalTo(subject));
+        assertThat(texts.item(1).getTextContent(), equalTo(status));
     }
 
     static String badgeWidth(String subject, String status) {
@@ -160,6 +172,10 @@ public class BadgeTestUtils {
             "UTF-8"
         );
         assertThat(actualGradient, equalToIgnoringWhiteSpace(expectedGradient));
+    }
+
+    private static void assertCrispEdges(Element element) {
+        assertThat(element.getAttribute("shape-rendering"), equalTo("crispEdges"));
     }
 
     private static String toString(Element element) {

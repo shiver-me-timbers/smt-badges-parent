@@ -21,5 +21,6 @@ package shiver.me.timbers.badge;
  */
 public enum Style {
     flat,
-    plastic
+    plastic,
+    flat_square
 }

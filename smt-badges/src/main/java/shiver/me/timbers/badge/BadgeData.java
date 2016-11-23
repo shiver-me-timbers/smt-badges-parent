@@ -17,6 +17,7 @@
 package shiver.me.timbers.badge;
 
 import static shiver.me.timbers.badge.Style.flat;
+import static shiver.me.timbers.badge.Style.flat_square;
 import static shiver.me.timbers.badge.Style.plastic;
 
 /**
@@ -91,6 +92,10 @@ public class BadgeData {
 
     public boolean isPlastic() {
         return plastic.equals(style);
+    }
+
+    public boolean isFlatSquare() {
+        return flat_square.equals(style);
     }
 
     public int getWidth() {

@@ -21,6 +21,7 @@ import org.junit.Test;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static shiver.me.timbers.badge.Style.flat;
+import static shiver.me.timbers.badge.Style.flat_square;
 import static shiver.me.timbers.badge.Style.plastic;
 
 public class BadgeDataTest {
@@ -34,6 +35,7 @@ public class BadgeDataTest {
         // Then
         assertThat(actual.isFlat(), is(true));
         assertThat(actual.isPlastic(), is(false));
+        assertThat(actual.isFlatSquare(), is(false));
     }
 
     @Test
@@ -45,6 +47,7 @@ public class BadgeDataTest {
         // Then
         assertThat(actual.isFlat(), is(true));
         assertThat(actual.isPlastic(), is(false));
+        assertThat(actual.isFlatSquare(), is(false));
     }
 
     @Test
@@ -56,5 +59,18 @@ public class BadgeDataTest {
         // Then
         assertThat(actual.isFlat(), is(false));
         assertThat(actual.isPlastic(), is(true));
+        assertThat(actual.isFlatSquare(), is(false));
+    }
+
+    @Test
+    public void Can_check_if_the_style_has_been_set_to_flat_square() {
+
+        // When
+        final BadgeData actual = new BadgeData(null, null, null, flat_square, 0, 0, null, 0, 0, 0, 0, 0, 0, 0);
+
+        // Then
+        assertThat(actual.isFlat(), is(false));
+        assertThat(actual.isPlastic(), is(false));
+        assertThat(actual.isFlatSquare(), is(true));
     }
 }
