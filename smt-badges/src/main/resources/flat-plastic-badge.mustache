@@ -13,17 +13,13 @@
             <stop offset="1" stop-opacity=".5" />
         </linearGradient>
     {{/badge.isPlastic}}
-    <rect {{#badge.isFlatSquare}}shape-rendering="crispEdges"{{/badge.isFlatSquare}}{{^badge.isFlatSquare}}rx="3"{{/badge.isFlatSquare}} width="{{badge.width}}" height="{{badge.height}}" fill="#555" />
-    <rect {{#badge.isFlatSquare}}shape-rendering="crispEdges"{{/badge.isFlatSquare}}{{^badge.isFlatSquare}}rx="3"{{/badge.isFlatSquare}} x="{{badge.subjectWidth}}" width="{{badge.statusWidth}}" height="{{badge.height}}" fill="{{badge.colour}}" />
+    <rect rx="3" width="{{badge.width}}" height="{{badge.height}}" fill="#555" />
+    <rect rx="3" x="{{badge.subjectWidth}}" width="{{badge.statusWidth}}" height="{{badge.height}}" fill="{{badge.colour}}" />
     <path fill="{{badge.colour}}" d="M{{badge.subjectWidth}} 0h4v{{badge.height}}H{{badge.subjectWidth}}z" />
-    {{^badge.isFlatSquare}}
-        <rect rx="3" width="{{badge.width}}" height="{{badge.height}}" fill="url(#smt-bg)" />
-    {{/badge.isFlatSquare}}
+    <rect rx="3" width="{{badge.width}}" height="{{badge.height}}" fill="url(#smt-bg)" />
     <g fill="#fff" text-anchor="middle" font-family="{{badge.fontFamily}},Verdana,Geneva,sans-serif" font-size="{{badge.fontSize}}">
-        {{^badge.isFlatSquare}}
-            <text x="{{badge.subjectX}}" y="{{badge.textShadowY}}" fill="#010101" fill-opacity=".3">{{badge.subject}}</text>
-            <text x="{{badge.statusX}}" y="{{badge.textShadowY}}" fill="#010101" fill-opacity=".3">{{badge.status}}</text>
-        {{/badge.isFlatSquare}}
+        <text x="{{badge.subjectX}}" y="{{badge.textShadowY}}" fill="#010101" fill-opacity=".3">{{badge.subject}}</text>
+        <text x="{{badge.statusX}}" y="{{badge.textShadowY}}" fill="#010101" fill-opacity=".3">{{badge.status}}</text>
         <text x="{{badge.subjectX}}" y="{{badge.textY}}">{{badge.subject}}</text>
         <text x="{{badge.statusX}}" y="{{badge.textY}}">{{badge.status}}</text>
     </g>

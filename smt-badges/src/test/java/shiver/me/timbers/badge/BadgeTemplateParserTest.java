@@ -21,6 +21,7 @@ import com.github.mustachejava.Mustache;
 import com.github.mustachejava.MustacheFactory;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.output.ByteArrayOutputStream;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -47,7 +48,7 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
-import static shiver.me.timbers.badge.Badge.TEMPLATE;
+import static shiver.me.timbers.badge.Badge.FLAT_PLASTIC_TEMPLATE;
 import static shiver.me.timbers.badge.Style.plastic;
 import static shiver.me.timbers.data.random.RandomStrings.someAlphaNumericString;
 import static shiver.me.timbers.data.random.RandomStrings.someString;
@@ -57,12 +58,23 @@ public class BadgeTemplateParserTest {
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
 
-    @Test
-    public void Can_generate_a_badge_from_a_template() throws IOException {
+    private TemplateFactory templateFactory;
+    private MustacheFactory mustacheFactory;
+    private Flusher flusher;
+    private BadgeTemplateParser parser;
 
-        final MustacheFactory mustacheFactory = mock(MustacheFactory.class);
+    @Before
+    public void setUp() {
+        templateFactory = mock(TemplateFactory.class);
+        mustacheFactory = mock(MustacheFactory.class);
+        flusher = mock(Flusher.class);
+        parser = new BadgeTemplateParser(templateFactory, mustacheFactory, flusher);
+    }
+
+    @Test
+    public void Can_generate_a_badge_from_a_flat_plastic_template() throws IOException {
+
         final String template = someString();
-        final Flusher flusher = mock(Flusher.class);
         final BadgeData data = mock(BadgeData.class);
 
         final Mustache mustache = mock(Mustache.class);
@@ -72,6 +84,7 @@ public class BadgeTemplateParserTest {
         final String expected = someString();
 
         // Given
+        given(templateFactory.choose(data)).willReturn(template);
         given(mustacheFactory.compile(template)).willReturn(mustache);
         willAnswer(new Answer() {
             @Override
@@ -84,7 +97,7 @@ public class BadgeTemplateParserTest {
         }).given(mustache).execute(any(Writer.class), eq(singletonMap("badge", data)));
 
         // When
-        final String actual = new BadgeTemplateParser(template, mustacheFactory, flusher).generate(data);
+        final String actual = parser.generate(data);
 
         // Then
         verify(flusher).flush(writerCaptor.capture());
@@ -95,9 +108,7 @@ public class BadgeTemplateParserTest {
     @Test
     public void Can_fail_to_generate_a_badge_from_a_template() throws IOException {
 
-        final MustacheFactory mustacheFactory = mock(MustacheFactory.class);
         final String template = someString();
-        final Flusher flusher = mock(Flusher.class);
         final BadgeData data = mock(BadgeData.class);
 
         final Mustache mustache = mock(Mustache.class);
@@ -105,6 +116,7 @@ public class BadgeTemplateParserTest {
         final IOException exception = new IOException();
 
         // Given
+        given(templateFactory.choose(data)).willReturn(template);
         given(mustacheFactory.compile(template)).willReturn(mustache);
         willThrow(exception).given(flusher).flush(any(Flushable.class));
         expectedException.expect(BadgeTemplateException.class);
@@ -112,7 +124,7 @@ public class BadgeTemplateParserTest {
         expectedException.expectCause(is(exception));
 
         // When
-        new BadgeTemplateParser(template, mustacheFactory, flusher).generate(data);
+        parser.generate(data);
     }
 
     @Test
@@ -126,7 +138,7 @@ public class BadgeTemplateParserTest {
         final BadgeData data = new BadgeData(subject, status, null, plastic, 0, 0, null, 0, 0, 0, 0, 0, 0, 0);
 
         // When
-        new DefaultMustacheFactory().compile(TEMPLATE).execute(writer, singletonMap("badge", data));
+        new DefaultMustacheFactory().compile(FLAT_PLASTIC_TEMPLATE).execute(writer, singletonMap("badge", data));
         writer.flush();
         final String actual = out.toString(UTF_8);
 

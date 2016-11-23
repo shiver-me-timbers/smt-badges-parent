@@ -31,7 +31,8 @@ public class Badge {
     static final int PADDING = 5;
     static final String FONT_FILE = "DejaVuSans-webfont.ttf";
     static final int FONT_SIZE = 11;
-    static final String TEMPLATE = "badge.mustache";
+    static final String FLAT_PLASTIC_TEMPLATE = "flat-plastic-badge.mustache";
+    static final String FLAT_SQUARE_TEMPLATE = "flat-square-badge.mustache";
 
     private final String svg;
 
@@ -44,7 +45,7 @@ public class Badge {
             subject,
             status, colour,
             new BadgeDataFactory(HEIGHT, PADDING, FONT_FILE, FONT_SIZE),
-            new BadgeTemplateParser(TEMPLATE),
+            new BadgeTemplateParser(FLAT_PLASTIC_TEMPLATE, FLAT_SQUARE_TEMPLATE),
             style
         );
     }
