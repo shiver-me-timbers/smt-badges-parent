@@ -37,7 +37,11 @@ public class BadgeTemplateParser {
     private final Flusher flusher;
 
     public BadgeTemplateParser(String flatPlasticTemplate, String flatSquareTemplate) {
-        this(new TemplateFactory(flatPlasticTemplate, flatSquareTemplate), new DefaultMustacheFactory(), new Flusher());
+        this(new TemplateFactory(flatPlasticTemplate, flatSquareTemplate));
+    }
+
+    public BadgeTemplateParser(TemplateFactory templateFactory) {
+        this(templateFactory, new DefaultMustacheFactory(), new Flusher());
     }
 
     public BadgeTemplateParser(TemplateFactory templateFactory, MustacheFactory mustacheFactory, Flusher flusher) {
@@ -46,7 +50,7 @@ public class BadgeTemplateParser {
         this.flusher = flusher;
     }
 
-    public String generate(BadgeData data) {
+    public String parse(BadgeData data) {
         final String template = templateFactory.choose(data);
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
         final OutputStreamWriter writer = new OutputStreamWriter(out);

@@ -25,22 +25,10 @@ import static shiver.me.timbers.badge.Style.plastic;
  *
  * @author Karl Bennett
  */
-public class BadgeData {
+public class BadgeData extends CommonBadgeData {
 
-    private final String subject;
-    private final String status;
     private final Colour colour;
     private final Style style;
-    private final int width;
-    private final int height;
-    private final String fontFamily;
-    private final int fontSize;
-    private final int subjectWidth;
-    private final int statusWidth;
-    private final int subjectX;
-    private final int statusX;
-    private final int textShadowY;
-    private final int textY;
 
     public BadgeData(
         String subject,
@@ -58,28 +46,22 @@ public class BadgeData {
         int textShadowY,
         int textY
     ) {
-        this.subject = subject;
-        this.status = status;
+        super(
+            subject,
+            status,
+            width,
+            height,
+            fontFamily,
+            fontSize,
+            subjectWidth,
+            statusWidth,
+            subjectX,
+            statusX,
+            textShadowY,
+            textY
+        );
         this.colour = colour;
         this.style = style;
-        this.width = width;
-        this.height = height;
-        this.fontFamily = fontFamily;
-        this.fontSize = fontSize;
-        this.subjectWidth = subjectWidth;
-        this.statusWidth = statusWidth;
-        this.subjectX = subjectX;
-        this.statusX = statusX;
-        this.textShadowY = textShadowY;
-        this.textY = textY;
-    }
-
-    public String getSubject() {
-        return subject;
-    }
-
-    public String getStatus() {
-        return status;
     }
 
     public Colour getColour() {
@@ -96,45 +78,5 @@ public class BadgeData {
 
     public boolean isFlatSquare() {
         return flat_square.equals(style);
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
-    public String getFontFamily() {
-        return fontFamily;
-    }
-
-    public int getFontSize() {
-        return fontSize;
-    }
-
-    public int getSubjectWidth() {
-        return subjectWidth;
-    }
-
-    public int getStatusWidth() {
-        return statusWidth;
-    }
-
-    public int getSubjectX() {
-        return subjectX;
-    }
-
-    public int getStatusX() {
-        return statusX;
-    }
-
-    public int getTextShadowY() {
-        return textShadowY;
-    }
-
-    public int getTextY() {
-        return textY;
     }
 }

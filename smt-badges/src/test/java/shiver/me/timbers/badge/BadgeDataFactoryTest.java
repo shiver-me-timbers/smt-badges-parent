@@ -34,16 +34,17 @@ public class BadgeDataFactoryTest {
     @Test
     public void Can_create_a_badge_data() {
 
-        final String fontFamily = someString();
-        final int fontSize = someInteger();
         final int height = someInteger();
         final int padding = someInteger();
+        final int fontSize = someInteger();
         final FontMetrics fontMetrics = mock(FontMetrics.class);
+        final BadgeOptions badgeOptions = mock(BadgeOptions.class);
+
+        final String fontFamily = someString();
         final String subject = someString();
         final String status = someString();
         final Colour colour = someEnum(Colour.class);
         final Style style = someEnum(Style.class);
-
         final double subjectWidth = someDouble();
         final double statusWidth = someDouble();
 
@@ -51,10 +52,14 @@ public class BadgeDataFactoryTest {
         given(fontMetrics.fontFamily()).willReturn(fontFamily);
         given(fontMetrics.calculateWidth(subject)).willReturn(subjectWidth);
         given(fontMetrics.calculateWidth(status)).willReturn(statusWidth);
+        given(badgeOptions.getSubject()).willReturn(subject);
+        given(badgeOptions.getStatus()).willReturn(status);
+        given(badgeOptions.getColour()).willReturn(colour);
+        given(badgeOptions.getStyle()).willReturn(style);
 
         // When
         final BadgeData actual = new BadgeDataFactory(height, padding, fontSize, fontMetrics)
-            .create(subject, status, colour, style);
+            .create(badgeOptions);
 
         // Then
         final int subjectContainerWidth = width(padding, subjectWidth);

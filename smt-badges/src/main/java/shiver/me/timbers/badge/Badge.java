@@ -42,23 +42,18 @@ public class Badge {
 
     public Badge(String subject, String status, Colour colour, Style style) {
         this(
-            subject,
-            status, colour,
+            new BadgeOptions(subject, status, style, colour),
             new BadgeDataFactory(HEIGHT, PADDING, FONT_FILE, FONT_SIZE),
-            new BadgeTemplateParser(FLAT_PLASTIC_TEMPLATE, FLAT_SQUARE_TEMPLATE),
-            style
+            new BadgeTemplateParser(FLAT_PLASTIC_TEMPLATE, FLAT_SQUARE_TEMPLATE)
         );
     }
 
     public Badge(
-        String subject,
-        String status,
-        Colour colour,
+        BadgeOptions badgeOptions,
         BadgeDataFactory dataFactory,
-        BadgeTemplateParser template,
-        Style style
+        BadgeTemplateParser templateParser
     ) {
-        this.svg = template.generate(dataFactory.create(subject, status, colour, style));
+        this.svg = templateParser.parse(dataFactory.create(badgeOptions));
     }
 
     @Override

@@ -97,7 +97,7 @@ public class BadgeTemplateParserTest {
         }).given(mustache).execute(any(Writer.class), eq(singletonMap("badge", data)));
 
         // When
-        final String actual = parser.generate(data);
+        final String actual = parser.parse(data);
 
         // Then
         verify(flusher).flush(writerCaptor.capture());
@@ -124,7 +124,7 @@ public class BadgeTemplateParserTest {
         expectedException.expectCause(is(exception));
 
         // When
-        parser.generate(data);
+        parser.parse(data);
     }
 
     @Test

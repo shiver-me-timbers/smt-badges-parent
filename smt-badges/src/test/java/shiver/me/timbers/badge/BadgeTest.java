@@ -35,23 +35,20 @@ public class BadgeTest {
     @Test
     public void Can_generate_the_badge_SVG_XML() {
 
-        final String subject = someString();
-        final String status = someString();
-        final Colour colour = someEnum(Colour.class);
-        final Style style = someEnum(Style.class);
+        final BadgeOptions badgeOptions = mock(BadgeOptions.class);
         final BadgeDataFactory dataFactory = mock(BadgeDataFactory.class);
-        final BadgeTemplateParser template = mock(BadgeTemplateParser.class);
+        final BadgeTemplateParser templateParser = mock(BadgeTemplateParser.class);
 
         final BadgeData data = mock(BadgeData.class);
 
         final String expected = someString();
 
         // Given
-        given(dataFactory.create(subject, status, colour, style)).willReturn(data);
-        given(template.generate(data)).willReturn(expected);
+        given(dataFactory.create(badgeOptions)).willReturn(data);
+        given(templateParser.parse(data)).willReturn(expected);
 
         // When
-        final String actual = new Badge(subject, status, colour, dataFactory, template, style)
+        final String actual = new Badge(badgeOptions, dataFactory, templateParser)
             .toString();
 
         // Then
