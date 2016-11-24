@@ -24,7 +24,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static shiver.me.timbers.data.random.RandomStrings.someString;
 
-public class TemplateFactoryTest {
+public class BadgeTemplateFactoryTest {
 
     @Test
     public void Can_choose_a_flat_template() {
@@ -38,7 +38,7 @@ public class TemplateFactoryTest {
         given(data.isFlatSquare()).willReturn(false);
 
         // When
-        final String actual = new TemplateFactory(flatPlasticTemplate, someString()).choose(data);
+        final String actual = new BadgeTemplateFactory(flatPlasticTemplate, someString()).choose(data);
 
         // Then
         assertThat(actual, is(flatPlasticTemplate));
@@ -56,7 +56,7 @@ public class TemplateFactoryTest {
         given(data.isFlatSquare()).willReturn(false);
 
         // When
-        final String actual = new TemplateFactory(flatPlasticTemplate, someString()).choose(data);
+        final String actual = new BadgeTemplateFactory(flatPlasticTemplate, someString()).choose(data);
 
         // Then
         assertThat(actual, is(flatPlasticTemplate));
@@ -74,7 +74,7 @@ public class TemplateFactoryTest {
         given(data.isFlatSquare()).willReturn(true);
 
         // When
-        final String actual = new TemplateFactory(someString(), flatSquareTemplate).choose(data);
+        final String actual = new BadgeTemplateFactory(someString(), flatSquareTemplate).choose(data);
 
         // Then
         assertThat(actual, is(flatSquareTemplate));

@@ -16,11 +16,9 @@
 
 package shiver.me.timbers.badge;
 
-import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.Mustache;
 import com.github.mustachejava.MustacheFactory;
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -31,13 +29,10 @@ import org.mockito.stubbing.Answer;
 
 import java.io.Flushable;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.io.Writer;
 
 import static java.lang.String.format;
-import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.Collections.singletonMap;
-import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
@@ -49,8 +44,8 @@ import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static shiver.me.timbers.badge.Badge.FLAT_PLASTIC_TEMPLATE;
-import static shiver.me.timbers.badge.Style.plastic;
-import static shiver.me.timbers.data.random.RandomStrings.someAlphaNumericString;
+import static shiver.me.timbers.badge.Badge.FLAT_SQUARE_TEMPLATE;
+import static shiver.me.timbers.badge.TestUtils.The_mustache_template_works_correctly;
 import static shiver.me.timbers.data.random.RandomStrings.someString;
 
 public class BadgeTemplateParserTest {
@@ -58,14 +53,14 @@ public class BadgeTemplateParserTest {
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
 
-    private TemplateFactory templateFactory;
+    private BadgeTemplateFactory templateFactory;
     private MustacheFactory mustacheFactory;
     private Flusher flusher;
     private BadgeTemplateParser parser;
 
     @Before
     public void setUp() {
-        templateFactory = mock(TemplateFactory.class);
+        templateFactory = mock(BadgeTemplateFactory.class);
         mustacheFactory = mock(MustacheFactory.class);
         flusher = mock(Flusher.class);
         parser = new BadgeTemplateParser(templateFactory, mustacheFactory, flusher);
@@ -128,22 +123,14 @@ public class BadgeTemplateParserTest {
     }
 
     @Test
-    public void The_mustache_template_works_correctly() throws IOException {
+    public void The_flat_plastic_mustache_template_works_correctly() throws IOException {
 
-        // Given
-        final String subject = someAlphaNumericString(8);
-        final String status = someAlphaNumericString(13);
-        final ByteArrayOutputStream out = new ByteArrayOutputStream();
-        final OutputStreamWriter writer = new OutputStreamWriter(out);
-        final BadgeData data = new BadgeData(subject, status, null, plastic, 0, 0, null, 0, 0, 0, 0, 0, 0, 0);
+        The_mustache_template_works_correctly(FLAT_PLASTIC_TEMPLATE);
+    }
 
-        // When
-        new DefaultMustacheFactory().compile(FLAT_PLASTIC_TEMPLATE).execute(writer, singletonMap("badge", data));
-        writer.flush();
-        final String actual = out.toString(UTF_8);
+    @Test
+    public void The_flat_square_mustache_template_works_correctly() throws IOException {
 
-        // Then
-        assertThat(actual, containsString(subject));
-        assertThat(actual, containsString(status));
+        The_mustache_template_works_correctly(FLAT_SQUARE_TEMPLATE);
     }
 }

@@ -19,26 +19,15 @@ package shiver.me.timbers.badge;
 /**
  * @author Karl Bennett
  */
-public class BadgeOptions {
+public class BadgeOptions extends CommonBadgeOptions {
 
-    private String subject;
-    private String status;
     private Colour colour;
     private Style style;
 
     public BadgeOptions(String subject, String status, Style style, Colour colour) {
-        this.subject = subject;
-        this.status = status;
+        super(subject, status);
         this.style = style;
         this.colour = colour;
-    }
-
-    public String getSubject() {
-        return subject;
-    }
-
-    public String getStatus() {
-        return status;
     }
 
     public Colour getColour() {

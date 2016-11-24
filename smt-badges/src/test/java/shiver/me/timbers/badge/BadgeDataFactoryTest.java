@@ -58,8 +58,7 @@ public class BadgeDataFactoryTest {
         given(badgeOptions.getStyle()).willReturn(style);
 
         // When
-        final BadgeData actual = new BadgeDataFactory(height, padding, fontSize, fontMetrics)
-            .create(badgeOptions);
+        final BadgeData actual = new BadgeDataFactory().create(height, padding, fontSize, fontMetrics, badgeOptions);
 
         // Then
         final int subjectContainerWidth = width(padding, subjectWidth);

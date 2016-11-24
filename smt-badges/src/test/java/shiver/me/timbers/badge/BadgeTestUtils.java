@@ -46,9 +46,9 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.equalToIgnoringWhiteSpace;
 import static org.hamcrest.Matchers.startsWith;
 import static org.junit.Assert.assertThat;
-import static shiver.me.timbers.badge.Badge.FONT_SIZE;
-import static shiver.me.timbers.badge.Badge.HEIGHT;
-import static shiver.me.timbers.badge.Badge.PADDING;
+import static shiver.me.timbers.badge.CommonBadge.FONT_SIZE;
+import static shiver.me.timbers.badge.CommonBadge.HEIGHT;
+import static shiver.me.timbers.badge.CommonBadge.PADDING;
 
 public class BadgeTestUtils {
 

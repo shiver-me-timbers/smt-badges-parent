@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="{{badge.width}}" height="{{badge.height}}">
+    <style>
+        #llink:hover {
+            fill: url(#llink-hover-bg);
+            stroke: #ccc
+        }
+
+        #rlink:hover {
+            fill: #4183c4
+        }
+    </style>
+    <linearGradient id="llink-bg" x2="0" y2="100%">
+        <stop offset="0" stop-color="#fcfcfc" stop-opacity="0" />
+        <stop offset="1" stop-opacity=".1" />
+    </linearGradient>
+    <linearGradient id="llink-hover-bg" x2="0" y2="100%">
+        <stop offset="0" stop-color="#ccc" stop-opacity=".1" />
+        <stop offset="1" stop-opacity=".1" />
+    </linearGradient>
+    <g stroke="#d5d5d5">
+        <rect stroke="none" fill="#fcfcfc" x=".5" y=".5" width="{{badge.subjectWidth}}" height="{{badge.height}}" rx="2" />
+        <rect y=".5" x="{{badge.statusRectangleX}}" width="{{badge.statusWidth}}" height="{{badge.height}}" rx="2" fill="#fafafa" />
+        <path stroke="#fafafa" d="M{{badge.statusTriangleX}} 7.5h.5v5H{{badge.statusTriangleX}}z" />
+        <path d="M{{badge.statusRectangleX}} 6.5l-3 3v1l3 3" stroke="d5d5d5" fill="#fafafa" />
+    </g>
+    <g fill="#333" text-anchor="middle" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-weight="700" font-size="11">
+        <text x="{{badge.subjectX}}" y="{{badge.textShadowY}}" fill="#fff">Style</text>
+        <text x="{{badge.subjectX}}" y="{{badge.textY}}">Style</text>
+        <text x="{{badge.statusX}}" y="{{badge.textShadowY}}" fill="#fff">social</text>
+        <a xlink:href="{{badge.subjectLink}}">
+            <text id="rlink" x="{{badge.statusX}}" y="{{badge.textY}}">social</text>
+        </a>
+    </g>
+    <a xlink:href="{{badge.statusLink}}">
+        <rect id="llink" stroke="#d5d5d5" fill="url(#llink-bg)" x=".5" y=".5" width="{{badge.subjectWidth}}" height="{{badge.height}}" rx="2" />
+    </a>
+</svg>

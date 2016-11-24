@@ -30,27 +30,23 @@ import static java.util.Collections.singletonMap;
  *
  * @author Karl Bennett
  */
-public class BadgeTemplateParser {
+public class BadgeTemplateParser<D extends CommonBadgeData> {
 
-    private final TemplateFactory templateFactory;
+    private final TemplateFactory<D> templateFactory;
     private final MustacheFactory mustacheFactory;
     private final Flusher flusher;
 
-    public BadgeTemplateParser(String flatPlasticTemplate, String flatSquareTemplate) {
-        this(new TemplateFactory(flatPlasticTemplate, flatSquareTemplate));
-    }
-
-    public BadgeTemplateParser(TemplateFactory templateFactory) {
+    public BadgeTemplateParser(TemplateFactory<D> templateFactory) {
         this(templateFactory, new DefaultMustacheFactory(), new Flusher());
     }
 
-    public BadgeTemplateParser(TemplateFactory templateFactory, MustacheFactory mustacheFactory, Flusher flusher) {
+    public BadgeTemplateParser(TemplateFactory<D> templateFactory, MustacheFactory mustacheFactory, Flusher flusher) {
         this.templateFactory = templateFactory;
         this.mustacheFactory = mustacheFactory;
         this.flusher = flusher;
     }
 
-    public String parse(BadgeData data) {
+    public String parse(D data) {
         final String template = templateFactory.choose(data);
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
         final OutputStreamWriter writer = new OutputStreamWriter(out);

@@ -19,7 +19,7 @@ package shiver.me.timbers.badge;
 /**
  * @author Karl Bennett
  */
-public interface TemplateFactory<D extends CommonBadgeData> {
+public interface InternalBadgeDataFactory<O extends CommonBadgeOptions, D extends CommonBadgeData> {
 
-    String choose(D data);
+    D create(int height, int padding, int fontSize, FontMetrics fontMetrics, O options);
 }

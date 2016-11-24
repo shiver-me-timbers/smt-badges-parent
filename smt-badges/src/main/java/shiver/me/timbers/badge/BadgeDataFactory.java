@@ -19,39 +19,24 @@ package shiver.me.timbers.badge;
 /**
  * @author Karl Bennett
  */
-public class BadgeDataFactory {
+public class BadgeDataFactory implements InternalBadgeDataFactory<BadgeOptions, BadgeData> {
 
-    private final int height;
-    private final int padding;
-    private final int fontSize;
-    private final FontMetrics fontMetrics;
-
-    public BadgeDataFactory(int height, int padding, String fontFile, int fontSize) {
-        this(height, padding, fontSize, new FontMetrics(fontFile, fontSize));
-    }
-
-    public BadgeDataFactory(int height, int padding, int fontSize, FontMetrics fontMetrics) {
-        this.height = height;
-        this.padding = padding;
-        this.fontSize = fontSize;
-        this.fontMetrics = fontMetrics;
-    }
-
-    public BadgeData create(BadgeOptions badgeOptions) {
-        final String subject = badgeOptions.getSubject();
-        final String status = badgeOptions.getStatus();
-        final int subjectWidth = textWidth(subject);
-        final int statusWidth = textWidth(status);
+    @Override
+    public BadgeData create(int height, int padding, int fontSize, FontMetrics fontMetrics, BadgeOptions options) {
+        final String subject = options.getSubject();
+        final String status = options.getStatus();
+        final int subjectWidth = textWidth(fontMetrics, padding, subject);
+        final int statusWidth = textWidth(fontMetrics, padding, status);
         final int width = width(subjectWidth, statusWidth);
         final int subjectX = subjectX(subjectWidth);
         final int statusX = statusX(subjectWidth, statusWidth);
-        final int textShadowY = textShadowY();
-        final int textY = textY();
+        final int textShadowY = textShadowY(height, padding);
+        final int textY = textY(height, padding);
         return new BadgeData(
             subject,
             status,
-            badgeOptions.getColour(),
-            badgeOptions.getStyle(),
+            options.getColour(),
+            options.getStyle(),
             width,
             height,
             fontMetrics.fontFamily(),
@@ -73,7 +58,7 @@ public class BadgeDataFactory {
         return subjectWidth / 2;
     }
 
-    private int textWidth(String text) {
+    private int textWidth(FontMetrics fontMetrics, int padding, String text) {
         return (int) fontMetrics.calculateWidth(text) + (padding * 2);
     }
 
@@ -81,11 +66,11 @@ public class BadgeDataFactory {
         return subjectWidth + statusWidth;
     }
 
-    private int textShadowY() {
+    private int textShadowY(int height, int padding) {
         return height - padding;
     }
 
-    private int textY() {
-        return textShadowY() - 1;
+    private int textY(int height, int padding) {
+        return textShadowY(height, padding) - 1;
     }
 }

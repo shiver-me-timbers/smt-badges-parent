@@ -16,14 +16,21 @@
 
 package shiver.me.timbers.badge;
 
+import com.github.mustachejava.DefaultMustacheFactory;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.io.output.ByteArrayOutputStream;
 
 import java.awt.*;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.AffineTransform;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
+import static java.util.Collections.singletonMap;
+import static org.hamcrest.Matchers.containsString;
+import static org.junit.Assert.assertThat;
+import static shiver.me.timbers.data.random.RandomStrings.someAlphaNumericString;
 
 public class TestUtils {
 
@@ -46,4 +53,23 @@ public class TestUtils {
     }
 
     public static final String[] FONTS = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
+
+    static void The_mustache_template_works_correctly(String template) throws IOException {
+
+        // Given
+        final String subject = someAlphaNumericString(8);
+        final String status = someAlphaNumericString(13);
+        final ByteArrayOutputStream out = new ByteArrayOutputStream();
+        final OutputStreamWriter writer = new OutputStreamWriter(out);
+        final BadgeData data = new BadgeData(subject, status, null, null, 0, 0, null, 0, 0, 0, 0, 0, 0, 0);
+
+        // When
+        new DefaultMustacheFactory().compile(template).execute(writer, singletonMap("badge", data));
+        writer.flush();
+        final String actual = out.toString(UTF_8);
+
+        // Then
+        assertThat(actual, containsString(subject));
+        assertThat(actual, containsString(status));
+    }
 }

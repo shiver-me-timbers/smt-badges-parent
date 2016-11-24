@@ -19,7 +19,21 @@ package shiver.me.timbers.badge;
 /**
  * @author Karl Bennett
  */
-public interface TemplateFactory<D extends CommonBadgeData> {
+public class BadgeTemplateFactory implements TemplateFactory<BadgeData> {
 
-    String choose(D data);
+    private final String flatPlasticTemplate;
+    private final String flatSquareTemplate;
+
+    public BadgeTemplateFactory(String flatPlasticTemplate, String flatSquareTemplate) {
+        this.flatPlasticTemplate = flatPlasticTemplate;
+        this.flatSquareTemplate = flatSquareTemplate;
+    }
+
+    @Override
+    public String choose(BadgeData data) {
+        if (data.isFlatSquare()) {
+            return flatSquareTemplate;
+        }
+        return flatPlasticTemplate;
+    }
 }
