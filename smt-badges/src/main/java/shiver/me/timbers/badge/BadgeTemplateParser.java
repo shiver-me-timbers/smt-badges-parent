@@ -32,22 +32,21 @@ import static java.util.Collections.singletonMap;
  */
 public class BadgeTemplateParser<D extends CommonBadgeData> {
 
-    private final TemplateFactory<D> templateFactory;
+    private final String template;
     private final MustacheFactory mustacheFactory;
     private final Flusher flusher;
 
-    public BadgeTemplateParser(TemplateFactory<D> templateFactory) {
-        this(templateFactory, new DefaultMustacheFactory(), new Flusher());
+    public BadgeTemplateParser(String template) {
+        this(template, new DefaultMustacheFactory(), new Flusher());
     }
 
-    public BadgeTemplateParser(TemplateFactory<D> templateFactory, MustacheFactory mustacheFactory, Flusher flusher) {
-        this.templateFactory = templateFactory;
+    public BadgeTemplateParser(String template, MustacheFactory mustacheFactory, Flusher flusher) {
+        this.template = template;
         this.mustacheFactory = mustacheFactory;
         this.flusher = flusher;
     }
 
     public String parse(D data) {
-        final String template = templateFactory.choose(data);
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
         final OutputStreamWriter writer = new OutputStreamWriter(out);
         mustacheFactory.compile(template).execute(writer, singletonMap("badge", data));

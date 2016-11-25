@@ -61,7 +61,7 @@ public class TestUtils {
         final String status = someAlphaNumericString(13);
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
         final OutputStreamWriter writer = new OutputStreamWriter(out);
-        final BadgeData data = new BadgeData(subject, status, null, null, 0, 0, null, 0, 0, 0, 0, 0, 0, 0);
+        final BadgeData data = new BadgeData(subject, status, null, 0, 0, null, 0, 0, 0, 0, 0, 0, 0);
 
         // When
         new DefaultMustacheFactory().compile(template).execute(writer, singletonMap("badge", data));

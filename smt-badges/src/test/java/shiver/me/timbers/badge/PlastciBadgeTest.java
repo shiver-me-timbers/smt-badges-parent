@@ -21,10 +21,10 @@ import org.junit.Test;
 import static shiver.me.timbers.data.random.RandomEnums.someEnum;
 import static shiver.me.timbers.data.random.RandomStrings.someString;
 
-public class BadgeTest {
+public class PlastciBadgeTest {
 
     @Test
     public void Can_create_a_badge() {
-        new Badge(someString(), someString(), someEnum(Colour.class));
+        new PlasticBadge(someString(), someString(), someEnum(Colour.class));
     }
 }

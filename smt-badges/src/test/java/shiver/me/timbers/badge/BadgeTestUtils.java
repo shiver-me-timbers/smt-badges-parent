@@ -65,7 +65,7 @@ public class BadgeTestUtils {
         }
     }
 
-    static Document toDocument(Badge badge) throws ParserConfigurationException, IOException, SAXException {
+    static Document toDocument(CommonBadge badge) throws ParserConfigurationException, IOException, SAXException {
         final DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         final DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
         return dBuilder.parse(new ByteArrayInputStream(badge.toString().getBytes(UTF_8)));
@@ -123,7 +123,7 @@ public class BadgeTestUtils {
         assertThat(textContainer.getAttribute("font-size"), equalTo(valueOf(FONT_SIZE)));
     }
 
-    static void assertSubject(Document actual, String subject) throws XPathExpressionException {
+    static void assertSubjectWithShadow(Document actual, String subject) throws XPathExpressionException {
         final Element subjectTextShadow = (Element) actual.getElementsByTagName("text").item(0);
         final Element subjectText = (Element) actual.getElementsByTagName("text").item(2);
         assertThat(subjectTextShadow.getAttribute("x"), equalTo(subjectX(subject)));
@@ -134,12 +134,26 @@ public class BadgeTestUtils {
         assertThat(subjectText.getTextContent(), equalTo(subject));
     }
 
-    static void assertStatus(Document actual, String subject, String status) throws XPathExpressionException {
+    static void assertStatusWithShadow(Document actual, String subject, String status) throws XPathExpressionException {
         final Element statusTextShadow = (Element) actual.getElementsByTagName("text").item(1);
         final Element statusText = (Element) actual.getElementsByTagName("text").item(3);
         assertThat(statusTextShadow.getAttribute("x"), equalTo(statusX(subject, status)));
         assertThat(statusTextShadow.getAttribute("y"), equalTo(textShadowY()));
         assertThat(statusTextShadow.getTextContent(), equalTo(status));
+        assertThat(statusText.getAttribute("x"), equalTo(statusX(subject, status)));
+        assertThat(statusText.getAttribute("y"), equalTo(textY()));
+        assertThat(statusText.getTextContent(), equalTo(status));
+    }
+
+    static void assertSubject(Document actual, String subject) throws XPathExpressionException {
+        final Element subjectText = (Element) actual.getElementsByTagName("text").item(0);
+        assertThat(subjectText.getAttribute("x"), equalTo(subjectX(subject)));
+        assertThat(subjectText.getAttribute("y"), equalTo(textY()));
+        assertThat(subjectText.getTextContent(), equalTo(subject));
+    }
+
+    static void assertStatus(Document actual, String subject, String status) throws XPathExpressionException {
+        final Element statusText = (Element) actual.getElementsByTagName("text").item(1);
         assertThat(statusText.getAttribute("x"), equalTo(statusX(subject, status)));
         assertThat(statusText.getAttribute("y"), equalTo(textY()));
         assertThat(statusText.getTextContent(), equalTo(status));

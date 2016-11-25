@@ -16,24 +16,15 @@
 
 package shiver.me.timbers.badge;
 
-/**
- * @author Karl Bennett
- */
-public class BadgeTemplateFactory implements TemplateFactory<BadgeData> {
+import org.junit.Test;
 
-    private final String flatPlasticTemplate;
-    private final String flatSquareTemplate;
+import static shiver.me.timbers.data.random.RandomEnums.someEnum;
+import static shiver.me.timbers.data.random.RandomStrings.someString;
 
-    public BadgeTemplateFactory(String flatPlasticTemplate, String flatSquareTemplate) {
-        this.flatPlasticTemplate = flatPlasticTemplate;
-        this.flatSquareTemplate = flatSquareTemplate;
-    }
+public class FlatBadgeTest {
 
-    @Override
-    public String choose(BadgeData data) {
-        if (data.isFlatSquare()) {
-            return flatSquareTemplate;
-        }
-        return flatPlasticTemplate;
+    @Test
+    public void Can_create_a_badge() {
+        new FlatBadge(someString(), someString(), someEnum(Colour.class));
     }
 }

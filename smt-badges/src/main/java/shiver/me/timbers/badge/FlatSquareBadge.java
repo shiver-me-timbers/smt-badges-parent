@@ -16,29 +16,23 @@
 
 package shiver.me.timbers.badge;
 
-import static shiver.me.timbers.badge.Style.flat;
-
 /**
- * This class is used to generate the XML for an SVG badge that are usually used to show metrics on source code
- * repositories. The design of this badge has been copied from http://shields.io and attempts to follow their
+ * This badge is very minimalist, it hos no gradient of rounded corners.
+ * <p>
+ * The design of this badge has been copied from http://shields.io and attempts to follow their
  * specification: https://github.com/badges/shields/blob/master/spec/SPECIFICATION.md
  *
  * @author Karl Bennett
  */
-public class Badge extends CommonBadge<BadgeOptions, BadgeData> {
+public class FlatSquareBadge extends CommonBadge<BadgeOptions, BadgeData> {
 
-    static final String FLAT_PLASTIC_TEMPLATE = "flat-plastic-badge.mustache";
     static final String FLAT_SQUARE_TEMPLATE = "flat-square-badge.mustache";
 
-    public Badge(String subject, String status, Colour colour) {
-        this(subject, status, colour, flat);
-    }
-
-    public Badge(String subject, String status, Colour colour, Style style) {
+    public FlatSquareBadge(String subject, String status, Colour colour) {
         super(
-            new BadgeOptions(subject, status, style, colour),
+            new BadgeOptions(subject, status, colour),
             new BadgeDataFactory(),
-            new BadgeTemplateFactory(FLAT_PLASTIC_TEMPLATE, FLAT_SQUARE_TEMPLATE)
+            FLAT_SQUARE_TEMPLATE
         );
     }
 }

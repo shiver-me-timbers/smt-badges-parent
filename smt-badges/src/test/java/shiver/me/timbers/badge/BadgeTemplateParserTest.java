@@ -43,9 +43,6 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
-import static shiver.me.timbers.badge.Badge.FLAT_PLASTIC_TEMPLATE;
-import static shiver.me.timbers.badge.Badge.FLAT_SQUARE_TEMPLATE;
-import static shiver.me.timbers.badge.TestUtils.The_mustache_template_works_correctly;
 import static shiver.me.timbers.data.random.RandomStrings.someString;
 
 public class BadgeTemplateParserTest {
@@ -53,23 +50,22 @@ public class BadgeTemplateParserTest {
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
 
-    private BadgeTemplateFactory templateFactory;
     private MustacheFactory mustacheFactory;
     private Flusher flusher;
-    private BadgeTemplateParser parser;
+    private String template;
+    private BadgeTemplateParser<CommonBadgeData> parser;
 
     @Before
     public void setUp() {
-        templateFactory = mock(BadgeTemplateFactory.class);
+        template = someString();
         mustacheFactory = mock(MustacheFactory.class);
         flusher = mock(Flusher.class);
-        parser = new BadgeTemplateParser(templateFactory, mustacheFactory, flusher);
+        parser = new BadgeTemplateParser<>(template, mustacheFactory, flusher);
     }
 
     @Test
     public void Can_generate_a_badge_from_a_flat_plastic_template() throws IOException {
 
-        final String template = someString();
         final BadgeData data = mock(BadgeData.class);
 
         final Mustache mustache = mock(Mustache.class);
@@ -79,7 +75,6 @@ public class BadgeTemplateParserTest {
         final String expected = someString();
 
         // Given
-        given(templateFactory.choose(data)).willReturn(template);
         given(mustacheFactory.compile(template)).willReturn(mustache);
         willAnswer(new Answer() {
             @Override
@@ -103,7 +98,6 @@ public class BadgeTemplateParserTest {
     @Test
     public void Can_fail_to_generate_a_badge_from_a_template() throws IOException {
 
-        final String template = someString();
         final BadgeData data = mock(BadgeData.class);
 
         final Mustache mustache = mock(Mustache.class);
@@ -111,7 +105,6 @@ public class BadgeTemplateParserTest {
         final IOException exception = new IOException();
 
         // Given
-        given(templateFactory.choose(data)).willReturn(template);
         given(mustacheFactory.compile(template)).willReturn(mustache);
         willThrow(exception).given(flusher).flush(any(Flushable.class));
         expectedException.expect(BadgeTemplateException.class);
@@ -120,17 +113,5 @@ public class BadgeTemplateParserTest {
 
         // When
         parser.parse(data);
-    }
-
-    @Test
-    public void The_flat_plastic_mustache_template_works_correctly() throws IOException {
-
-        The_mustache_template_works_correctly(FLAT_PLASTIC_TEMPLATE);
-    }
-
-    @Test
-    public void The_flat_square_mustache_template_works_correctly() throws IOException {
-
-        The_mustache_template_works_correctly(FLAT_SQUARE_TEMPLATE);
     }
 }

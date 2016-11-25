@@ -25,12 +25,7 @@ import javax.xml.xpath.XPathExpressionException;
 import java.io.IOException;
 
 import static java.lang.String.valueOf;
-import static shiver.me.timbers.badge.Badge.HEIGHT;
-import static shiver.me.timbers.badge.BadgeTestUtils.assertDividerPath;
-import static shiver.me.timbers.badge.BadgeTestUtils.assertFlatGradient;
 import static shiver.me.timbers.badge.BadgeTestUtils.assertFlatSquareStyle;
-import static shiver.me.timbers.badge.BadgeTestUtils.assertGradientRectangle;
-import static shiver.me.timbers.badge.BadgeTestUtils.assertPlasticGradient;
 import static shiver.me.timbers.badge.BadgeTestUtils.assertStatus;
 import static shiver.me.timbers.badge.BadgeTestUtils.assertStatusRectangle;
 import static shiver.me.timbers.badge.BadgeTestUtils.assertSubject;
@@ -39,12 +34,13 @@ import static shiver.me.timbers.badge.BadgeTestUtils.assertSvg;
 import static shiver.me.timbers.badge.BadgeTestUtils.assertTextContainer;
 import static shiver.me.timbers.badge.BadgeTestUtils.badgeWidth;
 import static shiver.me.timbers.badge.BadgeTestUtils.toDocument;
-import static shiver.me.timbers.badge.Style.flat_square;
-import static shiver.me.timbers.badge.Style.plastic;
+import static shiver.me.timbers.badge.FlatBadge.HEIGHT;
+import static shiver.me.timbers.badge.FlatSquareBadge.FLAT_SQUARE_TEMPLATE;
+import static shiver.me.timbers.badge.TestUtils.The_mustache_template_works_correctly;
 import static shiver.me.timbers.data.random.RandomEnums.someEnum;
 import static shiver.me.timbers.data.random.RandomStrings.someAlphaNumericString;
 
-public class ITBadge {
+public class ITFlatSquareBadge {
 
     @Test
     public void Can_create_a_badge()
@@ -56,49 +52,23 @@ public class ITBadge {
         final Colour colour = someEnum(Colour.class);
 
         // When
-        final Document actual = toDocument(new Badge(subject, status, colour));
+        final Document actual = toDocument(new FlatSquareBadge(subject, status, colour));
 
         // Then
         final String badgeWidth = badgeWidth(subject, status);
         final String badgeHeight = valueOf(HEIGHT);
         assertSvg(actual, badgeWidth, badgeHeight);
-        assertFlatGradient(actual);
+        assertFlatSquareStyle(actual, subject, status);
         assertSubjectRectangle(actual, badgeWidth, badgeHeight);
         assertStatusRectangle(actual, subject, status, colour, badgeHeight);
-        assertDividerPath(actual, subject, colour, badgeHeight);
-        assertGradientRectangle(actual, badgeWidth, badgeHeight);
         assertTextContainer(actual);
         assertSubject(actual, subject);
         assertStatus(actual, subject, status);
     }
 
     @Test
-    public void Can_create_a_badge_with_the_plastic_style()
-        throws ParserConfigurationException, IOException, SAXException, XPathExpressionException {
+    public void The_flat_mustache_template_works_correctly() throws IOException {
 
-        // When
-        final Document actual = toDocument(
-            new Badge(someAlphaNumericString(8), someAlphaNumericString(13), someEnum(Colour.class), plastic)
-        );
-
-        // Then
-        assertPlasticGradient(actual);
-    }
-
-    @Test
-    public void Can_create_a_badge_with_the_flat_square_style()
-        throws ParserConfigurationException, IOException, SAXException, XPathExpressionException {
-
-        // Given
-        final String subject = someAlphaNumericString(8);
-        final String status = someAlphaNumericString(13);
-
-        // When
-        final Document actual = toDocument(
-            new Badge(subject, status, someEnum(Colour.class), flat_square)
-        );
-
-        // Then
-        assertFlatSquareStyle(actual, subject, status);
+        The_mustache_template_works_correctly(FLAT_SQUARE_TEMPLATE);
     }
 }

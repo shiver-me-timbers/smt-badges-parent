@@ -16,11 +16,15 @@
 
 package shiver.me.timbers.badge;
 
-/**
- * @author Karl Bennett
- */
-public enum Style {
-    flat,
-    plastic,
-    flat_square
+import org.junit.Test;
+
+import static shiver.me.timbers.data.random.RandomEnums.someEnum;
+import static shiver.me.timbers.data.random.RandomStrings.someString;
+
+public class FlatSquareBadgeTest {
+
+    @Test
+    public void Can_create_a_badge() {
+        new FlatSquareBadge(someString(), someString(), someEnum(Colour.class));
+    }
 }

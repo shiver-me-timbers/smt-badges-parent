@@ -17,6 +17,9 @@
 package shiver.me.timbers.badge;
 
 /**
+ * This class is used to generate the XML for an SVG badge that is usually used to show metrics on source code
+ * repositories.
+ *
  * @author Karl Bennett
  */
 public class CommonBadge<O extends CommonBadgeOptions, D extends CommonBadgeData> {
@@ -28,23 +31,15 @@ public class CommonBadge<O extends CommonBadgeOptions, D extends CommonBadgeData
 
     private final String svg;
 
-    public CommonBadge(
-        O badgeOptions,
-        InternalBadgeDataFactory<O, D> dataFactory,
-        TemplateFactory<D> templateFactory
-    ) {
+    public CommonBadge(O badgeOptions, InternalBadgeDataFactory<O, D> dataFactory, String template) {
         this(
             badgeOptions,
             new CommonBadgeDataFactory<>(FONT_FILE, FONT_SIZE, HEIGHT, PADDING, dataFactory),
-            new BadgeTemplateParser<>(templateFactory)
+            new BadgeTemplateParser<D>(template)
         );
     }
 
-    public CommonBadge(
-        O badgeOptions,
-        CommonBadgeDataFactory<O, D> dataFactory,
-        BadgeTemplateParser<D> templateParser
-    ) {
+    public CommonBadge(O badgeOptions, CommonBadgeDataFactory<O, D> dataFactory, BadgeTemplateParser<D> templateParser) {
         this.svg = templateParser.parse(dataFactory.create(badgeOptions));
     }
 
