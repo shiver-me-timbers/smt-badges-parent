@@ -16,19 +16,22 @@
 
 package shiver.me.timbers.badge;
 
+import shiver.me.timbers.badge.data.BadgeData;
+import shiver.me.timbers.badge.data.BadgeDataFactory;
+import shiver.me.timbers.badge.options.BadgeOptions;
+
 /**
- * This is the default style of badge that you can see displayed on most projects.
- * <p>
- * The design of this badge has been copied from http://shields.io and attempts to follow their
- * specification: https://github.com/badges/shields/blob/master/spec/SPECIFICATION.md
+ * This class contains the logic that is used to generate the shield style of badge.
  *
  * @author Karl Bennett
  */
-public class FlatBadge extends ShieldBadge {
+public class ShieldBadge extends CommonBadge<BadgeOptions, BadgeData> {
 
-    static final String FLAT_TEMPLATE = "flat-badge.mustache";
-
-    public FlatBadge(String subject, String status, Colour colour) {
-        super(subject, status, colour, FLAT_TEMPLATE);
+    public ShieldBadge(String subject, String status, Colour colour, String template) {
+        super(
+            new BadgeOptions(subject, status, colour),
+            new BadgeDataFactory(),
+            template
+        );
     }
 }

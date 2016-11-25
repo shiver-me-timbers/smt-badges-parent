@@ -23,8 +23,7 @@ import shiver.me.timbers.badge.options.CommonBadgeOptions;
 import shiver.me.timbers.badge.template.BadgeTemplateParser;
 
 /**
- * This class is used to generate the XML for an SVG badge that is usually used to show metrics on source code
- * repositories.
+ * This class contains the common logic that can be used when generating any kind of badge.
  *
  * @author Karl Bennett
  */

@@ -16,10 +16,6 @@
 
 package shiver.me.timbers.badge;
 
-import shiver.me.timbers.badge.data.BadgeData;
-import shiver.me.timbers.badge.data.BadgeDataFactory;
-import shiver.me.timbers.badge.options.BadgeOptions;
-
 /**
  * This badge is very minimalist, it hos no gradient of rounded corners.
  * <p>
@@ -28,15 +24,11 @@ import shiver.me.timbers.badge.options.BadgeOptions;
  *
  * @author Karl Bennett
  */
-public class FlatSquareBadge extends CommonBadge<BadgeOptions, BadgeData> {
+public class FlatSquareBadge extends ShieldBadge {
 
     static final String FLAT_SQUARE_TEMPLATE = "flat-square-badge.mustache";
 
     public FlatSquareBadge(String subject, String status, Colour colour) {
-        super(
-            new BadgeOptions(subject, status, colour),
-            new BadgeDataFactory(),
-            FLAT_SQUARE_TEMPLATE
-        );
+        super(subject, status, colour, FLAT_SQUARE_TEMPLATE);
     }
 }

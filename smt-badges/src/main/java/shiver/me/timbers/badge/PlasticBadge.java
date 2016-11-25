@@ -16,10 +16,6 @@
 
 package shiver.me.timbers.badge;
 
-import shiver.me.timbers.badge.data.BadgeData;
-import shiver.me.timbers.badge.data.BadgeDataFactory;
-import shiver.me.timbers.badge.options.BadgeOptions;
-
 /**
  * This badge is similar to the normal flat style except it has a much more prominent gradient so pops out of the page
  * a bit more.
@@ -29,15 +25,11 @@ import shiver.me.timbers.badge.options.BadgeOptions;
  *
  * @author Karl Bennett
  */
-public class PlasticBadge extends CommonBadge<BadgeOptions, BadgeData> {
+public class PlasticBadge extends ShieldBadge {
 
     static final String PLASTIC_TEMPLATE = "plastic-badge.mustache";
 
     public PlasticBadge(String subject, String status, Colour colour) {
-        super(
-            new BadgeOptions(subject, status, colour),
-            new BadgeDataFactory(),
-            PLASTIC_TEMPLATE
-        );
+        super(subject, status, colour, PLASTIC_TEMPLATE);
     }
 }
