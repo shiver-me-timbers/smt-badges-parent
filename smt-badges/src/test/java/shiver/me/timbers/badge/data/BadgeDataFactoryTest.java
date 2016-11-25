@@ -14,9 +14,12 @@
  * limitations under the License.
  */
 
-package shiver.me.timbers.badge;
+package shiver.me.timbers.badge.data;
 
 import org.junit.Test;
+import shiver.me.timbers.badge.Colour;
+import shiver.me.timbers.badge.font.FontMetrics;
+import shiver.me.timbers.badge.options.BadgeOptions;
 
 import static org.junit.Assert.assertThat;
 import static org.mockito.BDDMockito.given;

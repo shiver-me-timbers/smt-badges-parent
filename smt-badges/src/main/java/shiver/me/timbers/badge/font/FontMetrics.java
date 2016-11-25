@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package shiver.me.timbers.badge;
+package shiver.me.timbers.badge.font;
 
 import java.awt.*;
 import java.awt.font.FontRenderContext;

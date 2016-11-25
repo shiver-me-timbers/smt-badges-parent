@@ -14,26 +14,28 @@
  * limitations under the License.
  */
 
-package shiver.me.timbers.badge;
+package shiver.me.timbers.badge.io;
 
-/**
- * @author Karl Bennett
- */
-public class CommonBadgeOptions {
+import org.junit.Test;
 
-    private String subject;
-    private String status;
+import java.io.Flushable;
+import java.io.IOException;
 
-    public CommonBadgeOptions(String subject, String status) {
-        this.subject = subject;
-        this.status = status;
-    }
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
-    public String getSubject() {
-        return subject;
-    }
+public class FlusherTest {
 
-    public String getStatus() {
-        return status;
+    @Test
+    public void Can_flush_a_flushable() throws IOException {
+
+        // Given
+        final Flushable flushable = mock(Flushable.class);
+
+        // When
+        new Flusher().flush(flushable);
+
+        // Then
+        verify(flushable).flush();
     }
 }

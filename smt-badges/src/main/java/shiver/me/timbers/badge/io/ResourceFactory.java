@@ -14,21 +14,17 @@
  * limitations under the License.
  */
 
-package shiver.me.timbers.badge;
+package shiver.me.timbers.badge.io;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * @author Karl Bennett
  */
-public class BadgeOptions extends CommonBadgeOptions {
+public class ResourceFactory {
 
-    private Colour colour;
-
-    public BadgeOptions(String subject, String status, Colour colour) {
-        super(subject, status);
-        this.colour = colour;
-    }
-
-    public Colour getColour() {
-        return colour;
+    public InputStream find(String resource) throws IOException {
+        return Thread.currentThread().getContextClassLoader().getResourceAsStream(resource);
     }
 }

@@ -14,12 +14,13 @@
  * limitations under the License.
  */
 
-package shiver.me.timbers.badge;
+package shiver.me.timbers.badge.font;
 
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import shiver.me.timbers.badge.io.ResourceFactory;
 
 import java.awt.*;
 import java.io.IOException;

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package shiver.me.timbers.badge;
+package shiver.me.timbers.badge.io;
 
 import org.apache.commons.io.IOUtils;
 import org.junit.Test;

@@ -17,6 +17,11 @@
 package shiver.me.timbers.badge;
 
 import org.junit.Test;
+import shiver.me.timbers.badge.data.CommonBadgeData;
+import shiver.me.timbers.badge.data.CommonBadgeDataFactory;
+import shiver.me.timbers.badge.options.BadgeOptions;
+import shiver.me.timbers.badge.options.CommonBadgeOptions;
+import shiver.me.timbers.badge.template.BadgeTemplateParser;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;

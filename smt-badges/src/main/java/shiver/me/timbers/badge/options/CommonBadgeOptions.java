@@ -14,12 +14,26 @@
  * limitations under the License.
  */
 
-package shiver.me.timbers.badge;
+package shiver.me.timbers.badge.options;
 
 /**
  * @author Karl Bennett
  */
-public interface TemplateFactory<D extends CommonBadgeData> {
+public class CommonBadgeOptions {
 
-    String choose(D data);
+    private String subject;
+    private String status;
+
+    public CommonBadgeOptions(String subject, String status) {
+        this.subject = subject;
+        this.status = status;
+    }
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public String getStatus() {
+        return status;
+    }
 }

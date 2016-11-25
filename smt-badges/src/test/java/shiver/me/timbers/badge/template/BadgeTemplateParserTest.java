@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package shiver.me.timbers.badge;
+package shiver.me.timbers.badge.template;
 
 import com.github.mustachejava.Mustache;
 import com.github.mustachejava.MustacheFactory;
@@ -26,6 +26,9 @@ import org.junit.rules.ExpectedException;
 import org.mockito.ArgumentCaptor;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
+import shiver.me.timbers.badge.data.BadgeData;
+import shiver.me.timbers.badge.data.CommonBadgeData;
+import shiver.me.timbers.badge.io.Flusher;
 
 import java.io.Flushable;
 import java.io.IOException;

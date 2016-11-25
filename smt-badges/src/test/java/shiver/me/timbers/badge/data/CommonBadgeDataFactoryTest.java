@@ -14,9 +14,11 @@
  * limitations under the License.
  */
 
-package shiver.me.timbers.badge;
+package shiver.me.timbers.badge.data;
 
 import org.junit.Test;
+import shiver.me.timbers.badge.font.FontMetrics;
+import shiver.me.timbers.badge.options.CommonBadgeOptions;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;

@@ -14,17 +14,16 @@
  * limitations under the License.
  */
 
-package shiver.me.timbers.badge;
+package shiver.me.timbers.badge.font;
 
-import java.io.Flushable;
-import java.io.IOException;
+import static java.lang.String.format;
 
 /**
  * @author Karl Bennett
  */
-public class Flusher {
+public class BadgeFontException extends IllegalStateException {
 
-    public void flush(Flushable flushable) throws IOException {
-        flushable.flush();
+    public BadgeFontException(String font, Throwable cause) {
+        super(format("Failed to load font file (%s)", font), cause);
     }
 }

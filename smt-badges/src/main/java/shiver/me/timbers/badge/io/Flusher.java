@@ -14,12 +14,17 @@
  * limitations under the License.
  */
 
-package shiver.me.timbers.badge;
+package shiver.me.timbers.badge.io;
+
+import java.io.Flushable;
+import java.io.IOException;
 
 /**
  * @author Karl Bennett
  */
-public interface InternalBadgeDataFactory<O extends CommonBadgeOptions, D extends CommonBadgeData> {
+public class Flusher {
 
-    D create(int height, int padding, int fontSize, FontMetrics fontMetrics, O options);
+    public void flush(Flushable flushable) throws IOException {
+        flushable.flush();
+    }
 }

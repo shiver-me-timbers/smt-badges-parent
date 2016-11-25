@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package shiver.me.timbers.badge;
+package shiver.me.timbers.badge.font;
 
 import org.junit.Test;
 
@@ -46,7 +46,7 @@ public class FontMetricsTest {
         given(fontFactory.create(fontSize)).willReturn(font);
 
         // When
-        final double actual = new FontMetrics(fontFactory, fontSize).calculateWidth(text);
+        final double actual = new shiver.me.timbers.badge.font.FontMetrics(fontFactory, fontSize).calculateWidth(text);
 
         // Then
         assertThat(actual, closeTo(textWidth(font, text), 0.001));
@@ -66,7 +66,7 @@ public class FontMetricsTest {
         given(font.getFamily()).willReturn(fontFamily);
 
         // When
-        final String actual = new FontMetrics(fontFactory, fontSize).fontFamily();
+        final String actual = new shiver.me.timbers.badge.font.FontMetrics(fontFactory, fontSize).fontFamily();
 
         // Then
         assertThat(actual, is(fontFamily));

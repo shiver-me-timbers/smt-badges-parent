@@ -14,10 +14,12 @@
  * limitations under the License.
  */
 
-package shiver.me.timbers.badge;
+package shiver.me.timbers.badge.template;
 
 import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.MustacheFactory;
+import shiver.me.timbers.badge.data.CommonBadgeData;
+import shiver.me.timbers.badge.io.Flusher;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

@@ -19,6 +19,7 @@ package shiver.me.timbers.badge;
 import com.github.mustachejava.DefaultMustacheFactory;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.output.ByteArrayOutputStream;
+import shiver.me.timbers.badge.data.BadgeData;
 
 import java.awt.*;
 import java.awt.font.FontRenderContext;

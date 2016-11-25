@@ -16,6 +16,10 @@
 
 package shiver.me.timbers.badge;
 
+import shiver.me.timbers.badge.data.BadgeData;
+import shiver.me.timbers.badge.data.BadgeDataFactory;
+import shiver.me.timbers.badge.options.BadgeOptions;
+
 /**
  * This is the default style of badge that you can see displayed on most projects.
  * <p>

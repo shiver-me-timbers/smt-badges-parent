@@ -14,15 +14,23 @@
  * limitations under the License.
  */
 
-package shiver.me.timbers.badge;
+package shiver.me.timbers.badge.options;
 
-import static java.lang.String.format;
+import shiver.me.timbers.badge.Colour;
 
 /**
  * @author Karl Bennett
  */
-public class BadgeTemplateException extends IllegalStateException {
-    public BadgeTemplateException(String template, Throwable cause) {
-        super(format("Could not load the template (%s).", template), cause);
+public class BadgeOptions extends CommonBadgeOptions {
+
+    private Colour colour;
+
+    public BadgeOptions(String subject, String status, Colour colour) {
+        super(subject, status);
+        this.colour = colour;
+    }
+
+    public Colour getColour() {
+        return colour;
     }
 }

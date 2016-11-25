@@ -14,17 +14,15 @@
  * limitations under the License.
  */
 
-package shiver.me.timbers.badge;
+package shiver.me.timbers.badge.template;
 
-import java.io.IOException;
-import java.io.InputStream;
+import static java.lang.String.format;
 
 /**
  * @author Karl Bennett
  */
-public class ResourceFactory {
-
-    public InputStream find(String resource) throws IOException {
-        return Thread.currentThread().getContextClassLoader().getResourceAsStream(resource);
+public class BadgeTemplateException extends IllegalStateException {
+    public BadgeTemplateException(String template, Throwable cause) {
+        super(format("Could not load the template (%s).", template), cause);
     }
 }

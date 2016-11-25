@@ -14,7 +14,9 @@
  * limitations under the License.
  */
 
-package shiver.me.timbers.badge;
+package shiver.me.timbers.badge.font;
+
+import shiver.me.timbers.badge.io.ResourceFactory;
 
 import java.awt.*;
 import java.io.IOException;

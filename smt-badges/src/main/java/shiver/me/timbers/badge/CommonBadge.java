@@ -16,6 +16,12 @@
 
 package shiver.me.timbers.badge;
 
+import shiver.me.timbers.badge.data.CommonBadgeData;
+import shiver.me.timbers.badge.data.CommonBadgeDataFactory;
+import shiver.me.timbers.badge.data.InternalBadgeDataFactory;
+import shiver.me.timbers.badge.options.CommonBadgeOptions;
+import shiver.me.timbers.badge.template.BadgeTemplateParser;
+
 /**
  * This class is used to generate the XML for an SVG badge that is usually used to show metrics on source code
  * repositories.

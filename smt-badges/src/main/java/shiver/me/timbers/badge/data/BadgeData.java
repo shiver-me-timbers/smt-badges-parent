@@ -14,7 +14,10 @@
  * limitations under the License.
  */
 
-package shiver.me.timbers.badge;
+package shiver.me.timbers.badge.data;
+
+import shiver.me.timbers.badge.Colour;
+import shiver.me.timbers.badge.template.BadgeTemplateParser;
 
 /**
  * This class holds all thr data that will be used by the {@link BadgeTemplateParser} to generate the SVG XML.
