@@ -16,7 +16,6 @@
 
 package shiver.me.timbers.badge.data;
 
-import shiver.me.timbers.badge.Colour;
 import shiver.me.timbers.badge.template.BadgeTemplateParser;
 
 /**
@@ -26,12 +25,14 @@ import shiver.me.timbers.badge.template.BadgeTemplateParser;
  */
 public class BadgeData extends CommonBadgeData {
 
-    private final Colour colour;
+    private final String subjectColour;
+    private final String statusColour;
 
     public BadgeData(
         String subject,
         String status,
-        Colour colour,
+        String subjectColour,
+        String statusColour,
         int width,
         int height,
         String fontFamily,
@@ -57,10 +58,15 @@ public class BadgeData extends CommonBadgeData {
             textShadowY,
             textY
         );
-        this.colour = colour;
+        this.subjectColour = subjectColour;
+        this.statusColour = statusColour;
     }
 
-    public Colour getColour() {
-        return colour;
+    public String getSubjectColour() {
+        return subjectColour;
+    }
+
+    public String getStatusColour() {
+        return statusColour;
     }
 }

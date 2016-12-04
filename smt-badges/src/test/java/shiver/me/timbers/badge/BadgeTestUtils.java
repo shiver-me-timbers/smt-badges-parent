@@ -46,9 +46,11 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.equalToIgnoringWhiteSpace;
 import static org.hamcrest.Matchers.startsWith;
 import static org.junit.Assert.assertThat;
+import static shiver.me.timbers.badge.Colour.darkgrey;
 import static shiver.me.timbers.badge.CommonBadge.FONT_SIZE;
 import static shiver.me.timbers.badge.CommonBadge.HEIGHT;
 import static shiver.me.timbers.badge.CommonBadge.PADDING;
+import static shiver.me.timbers.data.random.RandomStrings.someString;
 
 public class BadgeTestUtils {
 
@@ -84,16 +86,22 @@ public class BadgeTestUtils {
 
     static void assertSubjectRectangle(Document actual, String badgeWidth, String badgeHeight)
         throws XPathExpressionException {
+        assertSubjectRectangle(actual, badgeWidth, darkgrey.toString(), badgeHeight);
+    }
+
+    static void assertSubjectRectangle(Document actual, String badgeWidth, String colour, String badgeHeight)
+        throws XPathExpressionException {
         final Element subjectRectangle = (Element) actual.getElementsByTagName("rect").item(0);
         assertThat(subjectRectangle.getAttribute("width"), equalTo(badgeWidth));
         assertThat(subjectRectangle.getAttribute("height"), equalTo(badgeHeight));
+        assertThat(subjectRectangle.getAttribute("fill"), equalTo(colour));
     }
 
-    static void assertStatusRectangle(Document actual, String subject, String status, Colour colour, String badgeHeight)
+    static void assertStatusRectangle(Document actual, String subject, String status, String colour, String badgeHeight)
         throws XPathExpressionException {
         final Element statusRectangle = (Element) actual.getElementsByTagName("rect").item(1);
         assertStatusRectangle(actual, valueOf(textWidth(subject)), status, badgeHeight);
-        assertThat(statusRectangle.getAttribute("fill"), equalTo(colour.toString()));
+        assertThat(statusRectangle.getAttribute("fill"), equalTo(colour));
     }
 
     static void assertStatusRectangle(Document actual, String x, String status, String badgeHeight)
@@ -104,11 +112,11 @@ public class BadgeTestUtils {
         assertThat(statusRectangle.getAttribute("height"), equalTo(badgeHeight));
     }
 
-    static void assertDividerPath(Document actual, String subject, Colour colour, String badgeHeight)
+    static void assertDividerPath(Document actual, String subject, String colour, String badgeHeight)
         throws XPathExpressionException {
         final Element dividerPath = (Element) actual.getElementsByTagName("path").item(0);
         assertThat(dividerPath.getAttribute("d"), equalTo(dividerPathDirections(subject, badgeHeight)));
-        assertThat(dividerPath.getAttribute("fill"), equalTo(colour.toString()));
+        assertThat(dividerPath.getAttribute("fill"), equalTo(colour));
     }
 
     static void assertGradientRectangle(Document actual, String badgeWidth, String badgeHeight)
@@ -230,6 +238,10 @@ public class BadgeTestUtils {
 
     static int textWidth(String text) {
         return TestUtils.textWidth(DEFAULT_FONT.deriveFont(PLAIN, FONT_SIZE), text) + (PADDING * 2);
+    }
+
+    static String someColour() {
+        return someString(6, "abcdef0123456789");
     }
 
     private static void assertGradient(Document actual, String gradientFileName)

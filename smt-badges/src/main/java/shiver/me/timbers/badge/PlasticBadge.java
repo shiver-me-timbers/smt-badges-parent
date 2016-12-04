@@ -32,4 +32,8 @@ public class PlasticBadge extends ShieldBadge {
     public PlasticBadge(String subject, String status, Colour colour) {
         super(subject, status, colour, PLASTIC_TEMPLATE);
     }
+
+    public PlasticBadge(String subject, String status, String subjectColour, String statusColour) {
+        super(subject, status, subjectColour, statusColour, PLASTIC_TEMPLATE);
+    }
 }

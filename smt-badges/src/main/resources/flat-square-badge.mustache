@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="{{badge.width}}" height="{{badge.height}}">
-    <rect shape-rendering="crispEdges" width="{{badge.width}}" height="{{badge.height}}" fill="#555" />
-    <rect shape-rendering="crispEdges" x="{{badge.subjectWidth}}" width="{{badge.statusWidth}}" height="{{badge.height}}" fill="{{badge.colour}}" />
-    <path fill="{{badge.colour}}" d="M{{badge.subjectWidth}} 0h4v{{badge.height}}H{{badge.subjectWidth}}z" />
+    <rect shape-rendering="crispEdges" width="{{badge.width}}" height="{{badge.height}}" fill="{{badge.subjectColour}}" />
+    <rect shape-rendering="crispEdges" x="{{badge.subjectWidth}}" width="{{badge.statusWidth}}" height="{{badge.height}}" fill="{{badge.statusColour}}" />
+    <path fill="{{badge.statusColour}}" d="M{{badge.subjectWidth}} 0h4v{{badge.height}}H{{badge.subjectWidth}}z" />
     <g fill="#fff" text-anchor="middle" font-family="{{badge.fontFamily}},Verdana,Geneva,sans-serif" font-size="{{badge.fontSize}}">
         {{>badge-text}}
     </g>

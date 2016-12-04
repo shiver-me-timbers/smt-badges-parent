@@ -35,6 +35,7 @@ import static shiver.me.timbers.badge.BadgeTestUtils.assertSubjectWithShadow;
 import static shiver.me.timbers.badge.BadgeTestUtils.assertSvg;
 import static shiver.me.timbers.badge.BadgeTestUtils.assertTextContainer;
 import static shiver.me.timbers.badge.BadgeTestUtils.badgeWidth;
+import static shiver.me.timbers.badge.BadgeTestUtils.someColour;
 import static shiver.me.timbers.badge.BadgeTestUtils.toDocument;
 import static shiver.me.timbers.badge.FlatBadge.HEIGHT;
 import static shiver.me.timbers.badge.PlasticBadge.PLASTIC_TEMPLATE;
@@ -62,8 +63,36 @@ public class ITPlasticBadge {
         assertSvg(actual, badgeWidth, badgeHeight);
         assertPlasticGradient(actual);
         assertSubjectRectangle(actual, badgeWidth, badgeHeight);
-        assertStatusRectangle(actual, subject, status, colour, badgeHeight);
-        assertDividerPath(actual, subject, colour, badgeHeight);
+        assertStatusRectangle(actual, subject, status, colour.toString(), badgeHeight);
+        assertDividerPath(actual, subject, colour.toString(), badgeHeight);
+        assertGradientRectangle(actual, badgeWidth, badgeHeight);
+        assertTextContainer(actual);
+        assertSubjectWithShadow(actual, subject);
+        assertStatusWithShadow(actual, subject, status);
+    }
+
+
+    @Test
+    public void Can_create_a_plastic_badge_with_custom_colours()
+        throws ParserConfigurationException, IOException, SAXException, XPathExpressionException {
+
+        // Given
+        final String subject = someAlphaNumericString(8);
+        final String status = someAlphaNumericString(13);
+        final String subjectColour = someColour();
+        final String statusColour = someColour();
+
+        // When
+        final Document actual = toDocument(new PlasticBadge(subject, status, subjectColour, statusColour));
+
+        // Then
+        final String badgeWidth = badgeWidth(subject, status);
+        final String badgeHeight = valueOf(HEIGHT);
+        assertSvg(actual, badgeWidth, badgeHeight);
+        assertPlasticGradient(actual);
+        assertSubjectRectangle(actual, badgeWidth, subjectColour, badgeHeight);
+        assertStatusRectangle(actual, subject, status, statusColour, badgeHeight);
+        assertDividerPath(actual, subject, statusColour, badgeHeight);
         assertGradientRectangle(actual, badgeWidth, badgeHeight);
         assertTextContainer(actual);
         assertSubjectWithShadow(actual, subject);

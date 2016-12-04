@@ -33,6 +33,7 @@ import static shiver.me.timbers.badge.BadgeTestUtils.assertSubjectRectangle;
 import static shiver.me.timbers.badge.BadgeTestUtils.assertSvg;
 import static shiver.me.timbers.badge.BadgeTestUtils.assertTextContainer;
 import static shiver.me.timbers.badge.BadgeTestUtils.badgeWidth;
+import static shiver.me.timbers.badge.BadgeTestUtils.someColour;
 import static shiver.me.timbers.badge.BadgeTestUtils.toDocument;
 import static shiver.me.timbers.badge.FlatBadge.HEIGHT;
 import static shiver.me.timbers.badge.FlatSquareBadge.FLAT_SQUARE_TEMPLATE;
@@ -60,7 +61,32 @@ public class ITFlatSquareBadge {
         assertSvg(actual, badgeWidth, badgeHeight);
         assertFlatSquareStyle(actual, subject, status);
         assertSubjectRectangle(actual, badgeWidth, badgeHeight);
-        assertStatusRectangle(actual, subject, status, colour, badgeHeight);
+        assertStatusRectangle(actual, subject, status, colour.toString(), badgeHeight);
+        assertTextContainer(actual);
+        assertSubject(actual, subject);
+        assertStatus(actual, subject, status);
+    }
+
+    @Test
+    public void Can_create_a_flat_square_badge_with_custom_colours()
+        throws ParserConfigurationException, IOException, SAXException, XPathExpressionException {
+
+        // Given
+        final String subject = someAlphaNumericString(8);
+        final String status = someAlphaNumericString(13);
+        final String subjectColour = someColour();
+        final String statusColour = someColour();
+
+        // When
+        final Document actual = toDocument(new FlatSquareBadge(subject, status, subjectColour, statusColour));
+
+        // Then
+        final String badgeWidth = badgeWidth(subject, status);
+        final String badgeHeight = valueOf(HEIGHT);
+        assertSvg(actual, badgeWidth, badgeHeight);
+        assertFlatSquareStyle(actual, subject, status);
+        assertSubjectRectangle(actual, badgeWidth, subjectColour, badgeHeight);
+        assertStatusRectangle(actual, subject, status, statusColour, badgeHeight);
         assertTextContainer(actual);
         assertSubject(actual, subject);
         assertStatus(actual, subject, status);

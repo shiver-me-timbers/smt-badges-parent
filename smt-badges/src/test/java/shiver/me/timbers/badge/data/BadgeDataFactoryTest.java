@@ -17,7 +17,6 @@
 package shiver.me.timbers.badge.data;
 
 import org.junit.Test;
-import shiver.me.timbers.badge.Colour;
 import shiver.me.timbers.badge.font.FontMetrics;
 import shiver.me.timbers.badge.options.BadgeOptions;
 
@@ -27,7 +26,6 @@ import static org.mockito.Mockito.mock;
 import static shiver.me.timbers.badge.TestUtils.textShadowY;
 import static shiver.me.timbers.badge.TestUtils.textY;
 import static shiver.me.timbers.data.random.RandomDoubles.someDouble;
-import static shiver.me.timbers.data.random.RandomEnums.someEnum;
 import static shiver.me.timbers.data.random.RandomIntegers.someInteger;
 import static shiver.me.timbers.data.random.RandomStrings.someString;
 import static shiver.me.timbers.matchers.Matchers.hasField;
@@ -48,7 +46,8 @@ public class BadgeDataFactoryTest {
         final double statusWidth = someDouble();
         final String subject = someString();
         final String status = someString();
-        final Colour colour = someEnum(Colour.class);
+        final String subjectColour = someString();
+        final String statusColour = someString();
 
         // Given
         given(fontMetrics.fontFamily()).willReturn(fontFamily);
@@ -56,7 +55,8 @@ public class BadgeDataFactoryTest {
         given(fontMetrics.calculateWidth(status)).willReturn(statusWidth);
         given(badgeOptions.getSubject()).willReturn(subject);
         given(badgeOptions.getStatus()).willReturn(status);
-        given(badgeOptions.getColour()).willReturn(colour);
+        given(badgeOptions.getSubjectColour()).willReturn(subjectColour);
+        given(badgeOptions.getStatusColour()).willReturn(statusColour);
 
         // When
         final BadgeData actual = new BadgeDataFactory().create(height, padding, fontSize, fontMetrics, badgeOptions);
@@ -68,7 +68,8 @@ public class BadgeDataFactoryTest {
         final int statusX = subjectContainerWidth + (statusContainerWidth / 2);
         assertThat(actual, hasField("subject", subject));
         assertThat(actual, hasField("status", status));
-        assertThat(actual, hasField("colour", colour));
+        assertThat(actual, hasField("subjectColour", subjectColour));
+        assertThat(actual, hasField("statusColour", statusColour));
         assertThat(actual, hasField("width", width(padding, subjectWidth, statusWidth)));
         assertThat(actual, hasField("height", height));
         assertThat(actual, hasField("subjectWidth", subjectContainerWidth));

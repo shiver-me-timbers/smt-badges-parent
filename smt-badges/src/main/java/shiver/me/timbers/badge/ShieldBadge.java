@@ -20,6 +20,8 @@ import shiver.me.timbers.badge.data.BadgeData;
 import shiver.me.timbers.badge.data.BadgeDataFactory;
 import shiver.me.timbers.badge.options.BadgeOptions;
 
+import static shiver.me.timbers.badge.Colour.darkgrey;
+
 /**
  * This class contains the logic that is used to generate the shield style of badge.
  *
@@ -27,9 +29,13 @@ import shiver.me.timbers.badge.options.BadgeOptions;
  */
 public class ShieldBadge extends CommonBadge<BadgeOptions, BadgeData> {
 
-    public ShieldBadge(String subject, String status, Colour colour, String template) {
+    public ShieldBadge(String subject, String status, Colour statusColour, String template) {
+        this(subject, status, darkgrey.toString(), statusColour.toString(), template);
+    }
+
+    public ShieldBadge(String subject, String status, String subjectColour, String statusColour, String template) {
         super(
-            new BadgeOptions(subject, status, colour),
+            new BadgeOptions(subject, status, subjectColour, statusColour),
             new BadgeDataFactory(),
             template
         );

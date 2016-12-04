@@ -67,7 +67,7 @@ public class ITSocialBadge {
         final String statusRectangleX = valueOf(6.5 + textWidth(subject));
         assertSvg(actual, badgeWidth, badgeHeight);
         assertSocialGradient(actual);
-        assertSubjectRectangle(actual, valueOf(textWidth(subject)), rectangleHeight);
+        assertSubjectRectangle(actual, valueOf(textWidth(subject)), "#fcfcfc", rectangleHeight);
         assertStatusRectangle(actual, statusRectangleX, status, rectangleHeight);
         assertTriangleBasePath(actual, valueOf(6 + textWidth(subject)));
         assertTrianglePath(actual, statusRectangleX);
