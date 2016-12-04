@@ -30,7 +30,11 @@ import static shiver.me.timbers.badge.Colour.darkgrey;
 public class ShieldBadge extends CommonBadge<BadgeOptions, BadgeData> {
 
     public ShieldBadge(String subject, String status, Colour statusColour, String template) {
-        this(subject, status, darkgrey.toString(), statusColour.toString(), template);
+        this(subject, status, statusColour.toString(), template);
+    }
+
+    public ShieldBadge(String subject, String status, String statusColour, String template) {
+        this(subject, status, darkgrey.toString(), statusColour, template);
     }
 
     public ShieldBadge(String subject, String status, String subjectColour, String statusColour, String template) {

@@ -26,6 +26,7 @@ public class PlasticBadgeTest {
     @Test
     public void Can_create_a_badge() {
         new PlasticBadge(someString(), someString(), someEnum(Colour.class));
+        new PlasticBadge(someString(), someString(), someString());
         new PlasticBadge(someString(), someString(), someString(), someString());
     }
 }

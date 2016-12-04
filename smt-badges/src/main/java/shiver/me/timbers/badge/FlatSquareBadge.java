@@ -32,6 +32,10 @@ public class FlatSquareBadge extends ShieldBadge {
         super(subject, status, colour, FLAT_SQUARE_TEMPLATE);
     }
 
+    public FlatSquareBadge(String subject, String status, String colour) {
+        super(subject, status, colour, FLAT_SQUARE_TEMPLATE);
+    }
+
     public FlatSquareBadge(String subject, String status, String subjectColour, String statusColour) {
         super(subject, status, subjectColour, statusColour, FLAT_SQUARE_TEMPLATE);
     }

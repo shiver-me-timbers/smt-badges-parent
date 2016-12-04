@@ -73,6 +73,33 @@ public class ITPlasticBadge {
 
 
     @Test
+    public void Can_create_a_plastic_badge_with_a_custom_colour()
+        throws ParserConfigurationException, IOException, SAXException, XPathExpressionException {
+
+        // Given
+        final String subject = someAlphaNumericString(8);
+        final String status = someAlphaNumericString(13);
+        final String colour = someColour();
+
+        // When
+        final Document actual = toDocument(new PlasticBadge(subject, status, colour));
+
+        // Then
+        final String badgeWidth = badgeWidth(subject, status);
+        final String badgeHeight = valueOf(HEIGHT);
+        assertSvg(actual, badgeWidth, badgeHeight);
+        assertPlasticGradient(actual);
+        assertSubjectRectangle(actual, badgeWidth, badgeHeight);
+        assertStatusRectangle(actual, subject, status, colour, badgeHeight);
+        assertDividerPath(actual, subject, colour, badgeHeight);
+        assertGradientRectangle(actual, badgeWidth, badgeHeight);
+        assertTextContainer(actual);
+        assertSubjectWithShadow(actual, subject);
+        assertStatusWithShadow(actual, subject, status);
+    }
+
+
+    @Test
     public void Can_create_a_plastic_badge_with_custom_colours()
         throws ParserConfigurationException, IOException, SAXException, XPathExpressionException {
 

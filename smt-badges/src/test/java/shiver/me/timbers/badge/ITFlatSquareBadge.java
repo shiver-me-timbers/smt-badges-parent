@@ -68,6 +68,30 @@ public class ITFlatSquareBadge {
     }
 
     @Test
+    public void Can_create_a_flat_square_badge_with_a_custom_colour()
+        throws ParserConfigurationException, IOException, SAXException, XPathExpressionException {
+
+        // Given
+        final String subject = someAlphaNumericString(8);
+        final String status = someAlphaNumericString(13);
+        final String colour = someColour();
+
+        // When
+        final Document actual = toDocument(new FlatSquareBadge(subject, status, colour));
+
+        // Then
+        final String badgeWidth = badgeWidth(subject, status);
+        final String badgeHeight = valueOf(HEIGHT);
+        assertSvg(actual, badgeWidth, badgeHeight);
+        assertFlatSquareStyle(actual, subject, status);
+        assertSubjectRectangle(actual, badgeWidth, badgeHeight);
+        assertStatusRectangle(actual, subject, status, colour, badgeHeight);
+        assertTextContainer(actual);
+        assertSubject(actual, subject);
+        assertStatus(actual, subject, status);
+    }
+
+    @Test
     public void Can_create_a_flat_square_badge_with_custom_colours()
         throws ParserConfigurationException, IOException, SAXException, XPathExpressionException {
 

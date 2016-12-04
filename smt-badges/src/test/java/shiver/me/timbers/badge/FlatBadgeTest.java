@@ -26,6 +26,7 @@ public class FlatBadgeTest {
     @Test
     public void Can_create_a_badge() {
         new FlatBadge(someString(), someString(), someEnum(Colour.class));
+        new FlatBadge(someString(), someString(), someString());
         new FlatBadge(someString(), someString(), someString(), someString());
     }
 }
