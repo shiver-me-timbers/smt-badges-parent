@@ -241,7 +241,7 @@ public class BadgeTestUtils {
     }
 
     static String someColour() {
-        return someString(6, "abcdef0123456789");
+        return "#" + someString(6, "abcdef0123456789");
     }
 
     private static void assertGradient(Document actual, String gradientFileName)
