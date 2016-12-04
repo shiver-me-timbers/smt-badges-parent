@@ -18,20 +18,20 @@
         <stop offset="1" stop-opacity=".1" />
     </linearGradient>
     <g stroke="#d5d5d5">
-        <rect stroke="none" fill="#fcfcfc" x=".5" y=".5" width="{{badge.subjectWidth}}" height="{{badge.height}}" rx="2" />
-        <rect y=".5" x="{{badge.statusRectangleX}}" width="{{badge.statusWidth}}" height="{{badge.height}}" rx="2" fill="#fafafa" />
-        <path stroke="#fafafa" d="M{{badge.statusTriangleX}} 7.5h.5v5H{{badge.statusTriangleX}}z" />
+        <rect stroke="none" fill="#fcfcfc" x=".5" y=".5" width="{{badge.subjectWidth}}" height="{{badge.rectangleHeight}}" rx="2" />
+        <rect y=".5" x="{{badge.statusRectangleX}}" width="{{badge.statusWidth}}" height="{{badge.rectangleHeight}}" rx="2" fill="#fafafa" />
+        <path stroke="#fafafa" d="M{{badge.statusTriangleBaseX}} 7.5h.5v5H{{badge.statusTriangleBaseX}}z" />
         <path d="M{{badge.statusRectangleX}} 6.5l-3 3v1l3 3" stroke="d5d5d5" fill="#fafafa" />
     </g>
     <g fill="#333" text-anchor="middle" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-weight="700" font-size="11">
-        <text x="{{badge.subjectX}}" y="{{badge.textShadowY}}" fill="#fff">Style</text>
-        <text x="{{badge.subjectX}}" y="{{badge.textY}}">Style</text>
-        <text x="{{badge.statusX}}" y="{{badge.textShadowY}}" fill="#fff">social</text>
+        <text x="{{badge.subjectX}}" y="{{badge.textShadowY}}" fill="#fff">{{badge.subject}}</text>
+        <text x="{{badge.subjectX}}" y="{{badge.textY}}">{{badge.subject}}</text>
+        <text x="{{badge.statusX}}" y="{{badge.textShadowY}}" fill="#fff">{{badge.status}}</text>
         <a xlink:href="{{badge.subjectLink}}">
-            <text id="rlink" x="{{badge.statusX}}" y="{{badge.textY}}">social</text>
+            <text id="rlink" x="{{badge.statusX}}" y="{{badge.textY}}">{{badge.status}}</text>
         </a>
     </g>
     <a xlink:href="{{badge.statusLink}}">
-        <rect id="llink" stroke="#d5d5d5" fill="url(#llink-bg)" x=".5" y=".5" width="{{badge.subjectWidth}}" height="{{badge.height}}" rx="2" />
+        <rect id="llink" stroke="#d5d5d5" fill="url(#llink-bg)" x=".5" y=".5" width="{{badge.subjectWidth}}" height="{{badge.rectangleHeight}}" rx="2" />
     </a>
 </svg>

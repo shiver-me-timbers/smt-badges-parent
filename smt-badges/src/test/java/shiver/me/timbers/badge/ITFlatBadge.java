@@ -45,7 +45,7 @@ import static shiver.me.timbers.data.random.RandomStrings.someAlphaNumericString
 public class ITFlatBadge {
 
     @Test
-    public void Can_create_a_badge()
+    public void Can_create_a_flat_badge()
         throws ParserConfigurationException, IOException, SAXException, XPathExpressionException {
 
         // Given

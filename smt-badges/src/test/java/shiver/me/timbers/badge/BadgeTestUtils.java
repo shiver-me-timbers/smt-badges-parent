@@ -89,18 +89,19 @@ public class BadgeTestUtils {
         assertThat(subjectRectangle.getAttribute("height"), equalTo(badgeHeight));
     }
 
-    static void assertStatusRectangle(
-        Document actual,
-        String subject,
-        String status,
-        Colour colour,
-        String badgeHeight
-    ) throws XPathExpressionException {
+    static void assertStatusRectangle(Document actual, String subject, String status, Colour colour, String badgeHeight)
+        throws XPathExpressionException {
         final Element statusRectangle = (Element) actual.getElementsByTagName("rect").item(1);
-        assertThat(statusRectangle.getAttribute("x"), equalTo(String.valueOf(textWidth(subject))));
-        assertThat(statusRectangle.getAttribute("width"), equalTo(String.valueOf(textWidth(status))));
-        assertThat(statusRectangle.getAttribute("height"), equalTo(badgeHeight));
+        assertStatusRectangle(actual, valueOf(textWidth(subject)), status, badgeHeight);
         assertThat(statusRectangle.getAttribute("fill"), equalTo(colour.toString()));
+    }
+
+    static void assertStatusRectangle(Document actual, String x, String status, String badgeHeight)
+        throws XPathExpressionException {
+        final Element statusRectangle = (Element) actual.getElementsByTagName("rect").item(1);
+        assertThat(statusRectangle.getAttribute("x"), equalTo(x));
+        assertThat(statusRectangle.getAttribute("width"), equalTo(valueOf(textWidth(status))));
+        assertThat(statusRectangle.getAttribute("height"), equalTo(badgeHeight));
     }
 
     static void assertDividerPath(Document actual, String subject, Colour colour, String badgeHeight)
@@ -118,8 +119,12 @@ public class BadgeTestUtils {
     }
 
     static void assertTextContainer(Document actual) throws XPathExpressionException {
-        final Element textContainer = (Element) actual.getElementsByTagName("g").item(0);
-        assertThat(textContainer.getAttribute("font-family"), startsWith(DEFAULT_FONT.getFamily()));
+        assertTextContainer(actual, 0, DEFAULT_FONT.getFamily());
+    }
+
+    static void assertTextContainer(Document actual, int gIndex, String fontFamily) throws XPathExpressionException {
+        final Element textContainer = (Element) actual.getElementsByTagName("g").item(gIndex);
+        assertThat(textContainer.getAttribute("font-family"), startsWith(fontFamily));
         assertThat(textContainer.getAttribute("font-size"), equalTo(valueOf(FONT_SIZE)));
     }
 
@@ -178,14 +183,67 @@ public class BadgeTestUtils {
         return valueOf(textWidth(subject) + textWidth(status));
     }
 
+    static void assertSocialGradient(Document actual) throws XPathExpressionException, IOException {
+        assertGradient(actual, "social-gradient.xml");
+    }
+
+    static void assertTriangleBasePath(Document actual, String triangleBaseX)
+        throws XPathExpressionException {
+        final Element dividerPath = (Element) actual.getElementsByTagName("path").item(0);
+        assertThat(dividerPath.getAttribute("d"), equalTo(triangleBasePathDirections(triangleBaseX)));
+    }
+
+    static void assertTrianglePath(Document actual, String triangleBaseX)
+        throws XPathExpressionException {
+        final Element dividerPath = (Element) actual.getElementsByTagName("path").item(1);
+        assertThat(dividerPath.getAttribute("d"), equalTo(trianglePathDirections(triangleBaseX)));
+    }
+
+    static void assertSocialSubjectWithShadow(Document actual, String subject) throws XPathExpressionException {
+        final Element subjectTextShadow = (Element) actual.getElementsByTagName("text").item(0);
+        final Element subjectText = (Element) actual.getElementsByTagName("text").item(1);
+        assertThat(subjectTextShadow.getAttribute("x"), equalTo(subjectX(subject)));
+        assertThat(subjectTextShadow.getAttribute("y"), equalTo(textShadowY()));
+        assertThat(subjectTextShadow.getTextContent(), equalTo(subject));
+        assertThat(subjectText.getAttribute("x"), equalTo(subjectX(subject)));
+        assertThat(subjectText.getAttribute("y"), equalTo(textY()));
+        assertThat(subjectText.getTextContent(), equalTo(subject));
+    }
+
+    static void assertSocialStatusWithShadow(Document actual, String subject, String status) throws XPathExpressionException {
+        final Element statusTextShadow = (Element) actual.getElementsByTagName("text").item(2);
+        final Element statusText = (Element) actual.getElementsByTagName("text").item(3);
+        assertThat(statusTextShadow.getAttribute("x"), equalTo(statusX(subject, (int) 6.5, status)));
+        assertThat(statusTextShadow.getAttribute("y"), equalTo(textShadowY()));
+        assertThat(statusTextShadow.getTextContent(), equalTo(status));
+        assertThat(statusText.getAttribute("x"), equalTo(statusX(subject, (int) 6.5, status)));
+        assertThat(statusText.getAttribute("y"), equalTo(textY()));
+        assertThat(statusText.getTextContent(), equalTo(status));
+    }
+
+    static void assertLeftLinkRectangle(Document actual, String subject, String badgeHeight)
+        throws XPathExpressionException {
+        final Element statusRectangle = (Element) actual.getElementsByTagName("rect").item(2);
+        assertThat(statusRectangle.getAttribute("width"), equalTo(valueOf(textWidth(subject))));
+        assertThat(statusRectangle.getAttribute("height"), equalTo(badgeHeight));
+    }
+
+    static int textWidth(String text) {
+        return TestUtils.textWidth(DEFAULT_FONT.deriveFont(PLAIN, FONT_SIZE), text) + (PADDING * 2);
+    }
+
     private static void assertGradient(Document actual, String gradientFileName)
         throws XPathExpressionException, IOException {
-        final String actualGradient = toString((Element) actual.getElementsByTagName("linearGradient").item(0));
+        final NodeList gradients = actual.getElementsByTagName("linearGradient");
+        final StringBuilder actualGradient = new StringBuilder();
+        for (int i = 0; i < gradients.getLength(); i++) {
+            actualGradient.append(toString((Element) gradients.item(i)));
+        }
         final String expectedGradient = IOUtils.toString(
             Thread.currentThread().getContextClassLoader().getResourceAsStream(gradientFileName),
             "UTF-8"
         );
-        assertThat(actualGradient, equalToIgnoringWhiteSpace(expectedGradient));
+        assertThat(actualGradient.toString(), equalToIgnoringWhiteSpace(expectedGradient));
     }
 
     private static void assertCrispEdges(Element element) {
@@ -217,8 +275,12 @@ public class BadgeTestUtils {
         return pathDirections(subjectWidth, 0, 4, Integer.valueOf(badgeHeight), subjectWidth);
     }
 
-    private static int textWidth(String text) {
-        return TestUtils.textWidth(DEFAULT_FONT.deriveFont(PLAIN, FONT_SIZE), text) + (PADDING * 2);
+    private static String triangleBasePathDirections(String triangleBaseX) {
+        return format("M%1$s 7.5h.5v5H%1$sz", triangleBaseX);
+    }
+
+    private static String trianglePathDirections(String triangleBaseX) {
+        return format("M%s 6.5l-3 3v1l3 3", triangleBaseX);
     }
 
     private static String textShadowY() {
@@ -230,7 +292,11 @@ public class BadgeTestUtils {
     }
 
     private static String statusX(String subject, String status) {
-        return valueOf(textWidth(subject) + (textWidth(status) / 2));
+        return statusX(subject, 0, status);
+    }
+
+    private static String statusX(String subject, int spacing, String status) {
+        return valueOf(textWidth(subject) + spacing + (textWidth(status) / 2));
     }
 
     private static String subjectX(String subject) {

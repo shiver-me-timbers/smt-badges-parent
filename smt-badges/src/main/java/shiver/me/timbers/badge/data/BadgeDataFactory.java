@@ -19,6 +19,12 @@ package shiver.me.timbers.badge.data;
 import shiver.me.timbers.badge.font.FontMetrics;
 import shiver.me.timbers.badge.options.BadgeOptions;
 
+import static shiver.me.timbers.badge.data.BadgeDataUtils.statusX;
+import static shiver.me.timbers.badge.data.BadgeDataUtils.textShadowY;
+import static shiver.me.timbers.badge.data.BadgeDataUtils.textWidth;
+import static shiver.me.timbers.badge.data.BadgeDataUtils.textX;
+import static shiver.me.timbers.badge.data.BadgeDataUtils.textY;
+
 /**
  * @author Karl Bennett
  */
@@ -31,7 +37,7 @@ public class BadgeDataFactory implements InternalBadgeDataFactory<BadgeOptions, 
         final int subjectWidth = textWidth(fontMetrics, padding, subject);
         final int statusWidth = textWidth(fontMetrics, padding, status);
         final int width = width(subjectWidth, statusWidth);
-        final int subjectX = subjectX(subjectWidth);
+        final int subjectX = textX(subjectWidth);
         final int statusX = statusX(subjectWidth, statusWidth);
         final int textShadowY = textShadowY(height, padding);
         final int textY = textY(height, padding);
@@ -52,27 +58,8 @@ public class BadgeDataFactory implements InternalBadgeDataFactory<BadgeOptions, 
         );
     }
 
-    private static int statusX(int subjectWidth, int statusWidth) {
-        return subjectWidth + (subjectX(statusWidth));
-    }
-
-    private static int subjectX(int subjectWidth) {
-        return subjectWidth / 2;
-    }
-
-    private int textWidth(FontMetrics fontMetrics, int padding, String text) {
-        return (int) fontMetrics.calculateWidth(text) + (padding * 2);
-    }
-
-    private int width(int subjectWidth, int statusWidth) {
+    private static int width(int subjectWidth, int statusWidth) {
         return subjectWidth + statusWidth;
     }
 
-    private int textShadowY(int height, int padding) {
-        return height - padding;
-    }
-
-    private int textY(int height, int padding) {
-        return textShadowY(height, padding) - 1;
-    }
 }
