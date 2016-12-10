@@ -17,9 +17,8 @@
 package shiver.me.timbers.badge.data;
 
 import org.junit.Test;
-import shiver.me.timbers.badge.SocialBadgeData;
-import shiver.me.timbers.badge.SocialBadgeOptions;
 import shiver.me.timbers.badge.font.FontMetrics;
+import shiver.me.timbers.badge.options.SocialBadgeOptions;
 
 import java.math.BigDecimal;
 

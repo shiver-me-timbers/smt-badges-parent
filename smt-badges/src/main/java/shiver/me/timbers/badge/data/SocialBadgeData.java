@@ -1,6 +1,4 @@
-package shiver.me.timbers.badge;
-
-import shiver.me.timbers.badge.data.CommonBadgeData;
+package shiver.me.timbers.badge.data;
 
 /**
  * @author Karl Bennett

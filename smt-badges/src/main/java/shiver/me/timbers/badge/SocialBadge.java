@@ -1,6 +1,8 @@
 package shiver.me.timbers.badge;
 
+import shiver.me.timbers.badge.data.SocialBadgeData;
 import shiver.me.timbers.badge.data.SocialBadgeDataFactory;
+import shiver.me.timbers.badge.options.SocialBadgeOptions;
 
 /**
  * @author Karl Bennett
