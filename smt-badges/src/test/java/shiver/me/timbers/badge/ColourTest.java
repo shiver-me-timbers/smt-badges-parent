@@ -26,7 +26,6 @@ import static shiver.me.timbers.badge.Colour.darkgrey;
 import static shiver.me.timbers.badge.Colour.green;
 import static shiver.me.timbers.badge.Colour.lightgrey;
 import static shiver.me.timbers.badge.Colour.orange;
-import static shiver.me.timbers.badge.Colour.pink;
 import static shiver.me.timbers.badge.Colour.red;
 import static shiver.me.timbers.badge.Colour.yellow;
 import static shiver.me.timbers.badge.Colour.yellowgreen;
@@ -45,6 +44,5 @@ public class ColourTest {
         assertThat(darkgrey.toString(), equalTo("#555"));
         assertThat(lightgrey.toString(), equalTo("#9f9f9f"));
         assertThat(blue.toString(), equalTo("#007ec6"));
-        assertThat(pink.toString(), equalTo("#e05d44"));
     }
 }

@@ -30,8 +30,7 @@ public enum Colour {
     red("#e05d44"),
     darkgrey("#555"),
     lightgrey("#9f9f9f"),
-    blue("#007ec6"),
-    pink("#e05d44");
+    blue("#007ec6");
 
     private final String colour;
 
